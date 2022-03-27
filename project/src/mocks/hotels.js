@@ -4,7 +4,7 @@ import { getRandomInt } from '../utils/get-random';
 import { getRandomArray } from '../utils/get-item';
 import { getAnyItem} from '../utils/get-item';
 import { LENGTH_ID, AVATAR_URL, NUMBER_OF_HOTELS } from '../constants/common';
-import { CITIES, BOOLEANS, TYPES, IMAGES, TITLE, COMMENTS, GOODS, USERS } from './common';
+import { CITIES, BOOLEANS, TYPES, IMAGES, TITLE, COMMENTS, GOODS, USERS } from './auxiliary';
 
 function generateHotel() {
   return {

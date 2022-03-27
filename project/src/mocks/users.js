@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { toCamelCase } from '../utils/to-camel-snake-case';
 
 import { LENGTH_ID, AVATAR_URL, NUMBER_OF_USERS } from '../constants/common';
-import { USERS, BOOLEANS } from '../mocks/common';
+import { USERS, BOOLEANS } from './auxiliary';
 import { getAnyItem } from '../utils/get-item';
 
 function generateUser() {
