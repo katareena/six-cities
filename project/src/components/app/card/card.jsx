@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
 function transferToPercentage(rating) {
@@ -23,9 +24,9 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type})
     <article className="cities__place-card place-card">
       {renderPremiumMark(isPremium)}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="https://ru.reactjs.org">
+        <Link to="https://ru.reactjs.org">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -48,7 +49,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type})
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="https://ru.reactjs.org">{title}</a>
+          <Link to="https://ru.reactjs.org">{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

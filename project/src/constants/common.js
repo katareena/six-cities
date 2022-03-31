@@ -5,3 +5,10 @@ export const NUMBER_OF_HOTELS = 5;
 export const NUMBER_OF_COMMENTS = 10;
 export const AVATAR_URL = 'https://i.pravatar.cc/128';
 
+export const AppRout = {
+  ROOT: '/',
+  LOGIN: '/login',
+  FAVORITES: '/favorites',
+  OFFER: '/offer/:id',
+};
+
