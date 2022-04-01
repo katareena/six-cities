@@ -1,11 +1,50 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
-// import cn from 'classnames';
+import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import Header from '../header/header';
 
-function Offer (props) {
+function renderImage(img) {
+  return (
+    <div className="property__image-wrapper" key={img}>
+      <img className="property__image" src={img} alt="Studio" />
+    </div>
+  );
+}
+
+function renderPremiumMark(isPremium) {
+  if (isPremium) {
+    return (
+      <div className="property__mark">
+        <span>Premium</span>
+      </div>
+    );
+  } else {
+    return '';
+  }
+}
+
+function renderGoodsItem(good) {
+  return (
+    <li className="property__inside-item" key={good}>
+      {good}
+    </li>
+  );
+}
+
+function adoptRatingHundred(rating) {
+  const starsWidth = 147;
+  const starsNumber = 5;
+  return ((starsWidth/starsNumber)*rating);
+}
+
+function Offer ({hotels}) {
+  const {bedrooms, description, goods, images, isPremium, isFavorite, maxAdults, price, rating, title, type, host: {avatarUrl, isPro, name}} = hotels[0];
+
+  const createGallery = images.map((img) => renderImage(img));
+  const createGoods = goods.map((good) => renderGoodsItem(good));
+
   return (
     <div className="page">
       <Header />
@@ -13,36 +52,20 @@ function Offer (props) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Studio" />
-              </div>
+              {createGallery}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {renderPremiumMark(isPremium)}
+
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button
+                  className={cn('property__bookmark-button button',{'property__bookmark-button--active':isFavorite})} type="button"
+                >
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -51,80 +74,48 @@ function Offer (props) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}} />
+                  <span style={{width: adoptRatingHundred(rating)}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">€120</b>
+                <b className="property__price-value">{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What is inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
+                  {createGoods}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width={74} height={74} alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={avatarUrl} width={74} height={74} alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {name}
                   </span>
                   <span className="property__user-status">
-                    Pro
+                    {isPro ? 'Pro' : ''}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {description}
                   </p>
                 </div>
               </div>
@@ -309,13 +300,41 @@ function Offer (props) {
 }
 
 Offer.propTypes = {
-  // isPremium: PropTypes.bool.isRequired,
-  // isFavorite: PropTypes.bool.isRequired,
-  // previewImage: PropTypes.string.isRequired,
-  // price: PropTypes.number.isRequired,
-  // rating: PropTypes.number.isRequired,
-  // title: PropTypes.string.isRequired,
-  // type: PropTypes.string.isRequired,
+  hotels: PropTypes.arrayOf(
+    PropTypes.shape({
+      bedrooms: PropTypes.number.isRequired,
+      city: PropTypes.shape({
+        location: PropTypes.objectOf(PropTypes.number),
+        name: PropTypes.string.isRequired,
+      }),
+      description: PropTypes.string.isRequired,
+      goods: PropTypes.array,
+      host: PropTypes.shape({
+        avatarUrl: PropTypes.string,
+        id: PropTypes.string.isRequired,
+        isPro: PropTypes.bool.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+
+      id: PropTypes.string.isRequired,
+      images: PropTypes.array,
+      isPremium: PropTypes.bool.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+
+      // 'location': {
+      //   'latitude': 52.35514938496378,
+      //   'longitude': 4.673877537499948,
+      //   'zoom': 8,
+      // },
+
+      maxAdults: PropTypes.number.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      rating: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default Offer;

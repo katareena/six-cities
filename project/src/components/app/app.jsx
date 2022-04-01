@@ -31,8 +31,8 @@ function App({hotels, cities}) {
           <Favorites />
         </Route>
 
-        <Route path={AppRout.OFFER} exact>
-          <Offer />
+        <Route path={AppRout.OFFER_DEV} exact>
+          <Offer hotels={hotels}/>
         </Route>
 
         <Route>

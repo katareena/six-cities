@@ -22,5 +22,5 @@ export const getRandomArray = (array) => {
     randomArray.push(item);
   }
 
-  return new Set(randomArray);
+  return Array.from(new Set(randomArray));
 };
