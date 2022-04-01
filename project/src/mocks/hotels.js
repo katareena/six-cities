@@ -21,7 +21,7 @@ function generateHotel() {
     },
 
     'id': nanoid(LENGTH_ID),
-    'images': getRandomArray(IMAGES),//
+    'images': getRandomArray(IMAGES),
     'is_favorite': BOOLEANS[Math.floor(Math.random() * BOOLEANS.length)],
     'is_premium': BOOLEANS[Math.floor(Math.random() * BOOLEANS.length)],
 
@@ -32,7 +32,7 @@ function generateHotel() {
     },
 
     'max_adults': getRandomInt(1, 4),
-    'preview_image': getAnyItem(IMAGES),//
+    'preview_image': getAnyItem(IMAGES),
     'price': getRandomInt(50, 300),
     'rating': getRandomInt(0, 5),
     'title': getAnyItem(TITLE),
