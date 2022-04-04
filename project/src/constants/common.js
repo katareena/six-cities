@@ -10,6 +10,5 @@ export const AppRout = {
   LOGIN: '/login',
   FAVORITES: '/favorites',
   OFFER: '/offer/:id',
-  OFFER_DEV: '/offer',
 };
 

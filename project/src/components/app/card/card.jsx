@@ -19,12 +19,12 @@ function renderPremiumMark(isPremium) {
   }
 }
 
-function Card({isPremium, isFavorite, previewImage, price, rating, title, type}) {
+function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave}) {
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" id={id} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       {renderPremiumMark(isPremium)}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="https://ru.reactjs.org">
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -49,7 +49,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type})
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="https://ru.reactjs.org">{title}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -65,6 +65,9 @@ Card.propTypes = {
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  onMouseOver: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  id: PropTypes.string.isRequired,
 };
 
 export default Card;

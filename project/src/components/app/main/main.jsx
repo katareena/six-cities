@@ -1,30 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
-import Card from '../card/card.jsx';
 import Header from '../header/header.jsx';
 import CitiesList from './cities-list/cities-list.jsx';
+import CardsList from './cards-list/cards-list.jsx';
 
-function renderCard({isPremium, isFavorite, previewImage, price, rating, title, type, id}) {
-  return (
-    <Card
-      isPremium={isPremium}
-      isFavorite={isFavorite}
-      previewImage={previewImage}
-      price={price}
-      rating={rating}
-      title={title}
-      type={type}
-      id={id}
-      key={id}
-    />
-  );
-}
+import citiesProp from '../../prop-types/cities.prop.js';
+import hotelsProp from '../../prop-types/hotels.prop';
 
 function Main({hotels, cities}) {
+  const [activeCard, setActiveCard] = useState(0);
+  const onCardHover = (id) => setActiveCard(id);
   // console.log(hotels);
   // console.log(cities);
-  const Cards = hotels.map((hotel) => renderCard(hotel));
+  // console.log(activeCard);
 
   return (
     <div className="page page--gray page--main">
@@ -32,13 +20,16 @@ function Main({hotels, cities}) {
       {/* add page__main--index-empty */}
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CitiesList cities={cities} />
+        <CitiesList
+          cities={cities}
+        />
         <div className="cities">
           <div className="cities__places-container container">
             {/* replace with cities__no-places */}
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">312 places to stay in Amsterdam</b>
+
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by &thinsp;</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -55,9 +46,12 @@ function Main({hotels, cities}) {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {Cards}
-              </div>
+
+              <CardsList
+                hotels={hotels}
+                onCardHover={onCardHover}
+              />
+
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
@@ -70,23 +64,8 @@ function Main({hotels, cities}) {
 }
 
 Main.propTypes = {
-  hotels: PropTypes.arrayOf(
-    PropTypes.shape({
-      isPremium: PropTypes.bool.isRequired,
-      isFavorite: PropTypes.bool.isRequired,
-      previewImage: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      rating: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  cities: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  hotels: hotelsProp.isRequired,
+  cities: citiesProp.isRequired,
 };
 
 export default Main;

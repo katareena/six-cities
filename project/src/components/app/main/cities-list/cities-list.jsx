@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import CityItem from './city-item/city-item';
+import citiesProp from '../../../prop-types/cities.prop.js';
 
 function renderCitiesList(city) {
   return (
@@ -27,11 +27,7 @@ function CitiesList ({cities}) {
 }
 
 CitiesList.propTypes = {
-  cities: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  cities: citiesProp.isRequired,
 };
 
 export default CitiesList;
