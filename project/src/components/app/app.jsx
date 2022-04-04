@@ -28,10 +28,10 @@ function App({hotels, cities}) {
         </Route>
 
         <Route path={AppRout.FAVORITES} exact>
-          <Favorites />
+          <Favorites hotels={hotels} />
         </Route>
 
-        <Route path={AppRout.OFFER_DEV} exact>
+        <Route path={AppRout.OFFER} exact>
           <Offer hotels={hotels}/>
         </Route>
 
@@ -63,5 +63,8 @@ App.propTypes = {
     }),
   ).isRequired,
 };
+
+// todo: описать все пропы, вынести их в отдельную папку, импортировать куда нужно
+// + 3 последних пункта в задании
 
 export default App;
