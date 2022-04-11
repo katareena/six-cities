@@ -18,7 +18,7 @@ function renderCard({isPremium, isFavorite, previewImage, price, rating, title, 
       key={id}
 
       onMouseOver = {() => onCardHover(id)}
-      onMouseLeave = {() => onCardHover(0)}
+      onMouseLeave = {() => onCardHover('0')}
     />
   );
 }

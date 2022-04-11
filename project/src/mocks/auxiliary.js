@@ -12,6 +12,8 @@ export const GOODS = ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coff
 
 export const TITLE = ['Beautiful & luxurious apartment at great location', 'Wood and stone place', 'Canal View Prinsengracht', 'Nice, cozy, warm big bed apartment'];
 
+export const COORDS = [[52.387262, 4.862236], [52.380264, 4.847790], [52.366081, 4.855314], [52.360369, 4.897749], [52.419659, 4.888720], [52.383579, 4.916408], [52.372344, 4.966969], [52.338990, 4.895943]];
+
 export const CITIES = [
   {
     'location': {
