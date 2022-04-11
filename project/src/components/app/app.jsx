@@ -10,7 +10,11 @@ import Favorites from './favorites/favorites';
 import NotFoundPage from './not-found/not-found';
 import Offer from './offer/offer';
 
-function App({hotels, cities}) {
+import citiesProp from '../prop-types/cities.prop';
+import commentsProp from '../prop-types/comments.prop';
+import hotelsProp from '../prop-types/hotels.prop';
+
+function App({hotels, cities, comments}) {
   return (
     <BrowserRouter>
       <Switch>
@@ -32,7 +36,7 @@ function App({hotels, cities}) {
         </Route>
 
         <Route path={AppRout.OFFER} exact>
-          <Offer hotels={hotels}/>
+          <Offer hotels={hotels} comments={comments}/>
         </Route>
 
         <Route>
@@ -45,26 +49,9 @@ function App({hotels, cities}) {
 }
 
 App.propTypes = {
-  hotels: PropTypes.arrayOf( //an array of certain elements, allows to refine the contents of the array
-    PropTypes.shape({ //allows to describe the structure of the expected object
-      isPremium: PropTypes.bool.isRequired,
-      isFavorite: PropTypes.bool.isRequired,
-      previewImage: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      rating: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  cities: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  hotels: hotelsProp,
+  cities: citiesProp.isRequired,
+  comments: commentsProp,
 };
-
-// todo: описать все пропы, вынести их в отдельную папку, импортировать куда нужно
-// + 3 последних пункта в задании
 
 export default App;
