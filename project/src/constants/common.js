@@ -7,6 +7,16 @@ export const AVATAR_URL = 'https://i.pravatar.cc/128';
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
+export const CardListClasses = {
+  '': 'cities__places-list places__list tabs__content',
+  'offer': 'near-places__list places__list',
+};
+
+export const CardItemClasses = {
+  '': 'cities__place-card place-card',
+  'offer': 'near-places__card place-card',
+};
+
 export const AppRout = {
   ROOT: '/',
   LOGIN: '/login',

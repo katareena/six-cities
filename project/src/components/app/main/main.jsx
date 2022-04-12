@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import Header from '../header/header.jsx';
-import CitiesList from './cities-list/cities-list.jsx';
-import CardsList from './cards-list/cards-list.jsx';
-import Map from '../main/map/map';
-import SortMenu from './sort-menu/sort-menu.jsx';
+import Header from '../header/header';
+import CitiesList from './cities-list/cities-list';
+import CardsList from '../common/cards-list/cards-list';
+import Map from '../main/map-main/map-main';
+import SortMenu from './sort-menu/sort-menu';
 
-import citiesProp from '../../prop-types/cities.prop.js';
+import citiesProp from '../../prop-types/cities.prop';
 import hotelsProp from '../../prop-types/hotels.prop';
 
 function Main({hotels, cities}) {

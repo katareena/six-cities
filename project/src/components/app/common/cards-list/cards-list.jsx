@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Card from '../../card/card';
+import Card from './card/card';
 import hotelsProp from '../../../prop-types/hotels.prop';
+
+import { CardListClasses } from '../../../../constants/common';
 
 function renderCard({isPremium, isFavorite, previewImage, price, rating, title, type, id}, onCardHover) {
   return (
@@ -25,9 +27,10 @@ function renderCard({isPremium, isFavorite, previewImage, price, rating, title, 
 
 function CardsList({hotels, onCardHover}) {
   const Cards = hotels.map((key) => renderCard(key, onCardHover));
+  const currentPathname = window.location.pathname.split('/')[1];
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={CardListClasses[currentPathname]}>
       {Cards}
     </div>
   );
