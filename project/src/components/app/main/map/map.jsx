@@ -6,15 +6,22 @@ import useMap from '../../../../hooks/use-map/use-map';
 import citiesProp from '../../../prop-types/cities.prop.js';
 import hotelsProp from '../../../prop-types/hotels.prop';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../../../constants/common';
-import { createIcon } from '../../../../utils/create-icon';
 
-function renderPoints(map, point, activeCard) {
+function createIcon(urlMarker) {
+  return leaflet.icon({
+    iconUrl: urlMarker,
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+  });
+}
+
+function renderPoints({id, location: {latitude, longitude}}, activeCard, map) {
   leaflet
     .marker({
-      lat: point.location.latitude,
-      lng: point.location.longitude,
+      lat: latitude,
+      lng: longitude,
     }, {
-      icon: (point.id === activeCard)
+      icon: (id === activeCard)
         ? createIcon(URL_MARKER_CURRENT)
         : createIcon(URL_MARKER_DEFAULT),
     })
@@ -29,7 +36,7 @@ function Map({hotels, cities, activeCity, activeCard}) {
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => renderPoints(map, point, activeCard));
+      points.forEach((point) => renderPoints(point, activeCard, map));
     }
   }, [map, points, activeCard]);
 
