@@ -1,33 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Card from '../../card/card';
+import Card from './card/card';
 import hotelsProp from '../../../prop-types/hotels.prop';
 
-function renderCard({isPremium, isFavorite, previewImage, price, rating, title, type, id}, onCardHover) {
+import { CardListClasses } from '../../../../constants/common';
+
+function renderCard({id, ...rest}, onCardHover) {
   return (
     <Card
-      isPremium={isPremium}
-      isFavorite={isFavorite}
-      previewImage={previewImage}
-      price={price}
-      rating={rating}
-      title={title}
-      type={type}
+      {...rest}
       id={id}
       key={id}
 
       onMouseOver = {() => onCardHover(id)}
-      onMouseLeave = {() => onCardHover(0)}
+      onMouseLeave = {() => onCardHover('0')}
     />
   );
 }
 
 function CardsList({hotels, onCardHover}) {
   const Cards = hotels.map((key) => renderCard(key, onCardHover));
+  const currentPathname = window.location.pathname.split('/')[1];
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={CardListClasses[currentPathname]}>
       {Cards}
     </div>
   );

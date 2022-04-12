@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function CityItem ({city}) {
+function CityItem ({city, activeCity, onCityClick}) {
   return (
-    <li className="locations__item">
-      {/* tabs__item--active */}
-      <Link className="locations__item-link tabs__item" to="https://ru.reactjs.org">
+    <li className="locations__item" onClick={onCityClick}>
+      <Link className={`locations__item-link tabs__item ${city === activeCity ? 'tabs__item--active' : ''}`} to="#">
         <span>{city}</span>
       </Link>
     </li>
@@ -15,6 +14,8 @@ function CityItem ({city}) {
 
 CityItem.propTypes = {
   city: PropTypes.string.isRequired,
+  activeCity: PropTypes.string.isRequired,
+  onCityClick: PropTypes.func.isRequired,
 };
 
 export default CityItem;
