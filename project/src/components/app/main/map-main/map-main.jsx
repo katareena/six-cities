@@ -5,15 +5,8 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../../../hooks/use-map/use-map';
 import citiesProp from '../../../prop-types/cities.prop.js';
 import hotelsProp from '../../../prop-types/hotels.prop';
+import { createIcon } from '../../../../utils/for-render-pins';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../../../constants/common';
-
-function createIcon(urlMarker) {
-  return leaflet.icon({
-    iconUrl: urlMarker,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-  });
-}
 
 function renderPoints({id, location: {latitude, longitude}}, activeCard, map) {
   leaflet

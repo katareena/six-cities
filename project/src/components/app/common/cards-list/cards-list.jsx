@@ -6,16 +6,10 @@ import hotelsProp from '../../../prop-types/hotels.prop';
 
 import { CardListClasses } from '../../../../constants/common';
 
-function renderCard({isPremium, isFavorite, previewImage, price, rating, title, type, id}, onCardHover) {
+function renderCard({id, ...rest}, onCardHover) {
   return (
     <Card
-      isPremium={isPremium}
-      isFavorite={isFavorite}
-      previewImage={previewImage}
-      price={price}
-      rating={rating}
-      title={title}
-      type={type}
+      {...rest}
       id={id}
       key={id}
 
