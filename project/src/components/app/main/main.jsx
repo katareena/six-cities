@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'; // one of the ways to connect React to the Redux(store)
 
 import Header from '../header/header';
 import CitiesList from './cities-list/cities-list';
@@ -7,18 +9,17 @@ import Map from '../main/map-main/map-main';
 import SortMenu from './sort-menu/sort-menu';
 
 import citiesProp from '../../prop-types/cities.prop';
-import hotelsProp from '../../prop-types/hotels.prop';
+import offersProp from '../../prop-types/offers.prop';
 
-function Main({hotels, cities}) {
+function Main({offers, cities, activeCity}) {
   const [activeCard, setActiveCard] = useState('0');
-  const [activeCity, setActiveCity] = useState(cities[3].name);
   const [openSort, setOpenSort] = useState(false);
   const onCardHover = (id) => setActiveCard(id);
-  const onCityClick = (name) => setActiveCity(name);
   const onSortClick = () => setOpenSort(!openSort);
-  const actualHotels = hotels.filter((hotel) => hotel.city.name === activeCity);
-  // console.log(actualHotels);
-  // console.log(hotels);
+  const actualoffers = offers.filter((offer) => offer.city.name === activeCity);
+
+  // console.log(actualoffers);
+  // console.log(offers);
   // console.log(cities);
   // console.log(typeof activeCard, activeCard);
   // console.log(activeCity);
@@ -30,7 +31,6 @@ function Main({hotels, cities}) {
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList
           cities={cities}
-          onCityClick={onCityClick}
           activeCity={activeCity}
         />
         <div className="cities">
@@ -38,7 +38,7 @@ function Main({hotels, cities}) {
             {/* replace with cities__no-places */}
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in {activeCity}</b>
+              <b className="places__found">{actualoffers.length} places to stay in {activeCity}</b>
 
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by &thinsp;</span>
@@ -52,14 +52,14 @@ function Main({hotels, cities}) {
               </form>
 
               <CardsList
-                hotels={actualHotels}
+                offers={actualoffers}
                 onCardHover={onCardHover}
               />
             </section>
 
             <div className="cities__right-section">
               <Map
-                hotels={hotels}
+                offers={offers}
                 cities={cities}
                 activeCity={activeCity}
                 activeCard={activeCard}
@@ -74,8 +74,15 @@ function Main({hotels, cities}) {
 }
 
 Main.propTypes = {
-  hotels: hotelsProp.isRequired,
+  offers: offersProp.isRequired,
   cities: citiesProp.isRequired,
+  activeCity: PropTypes.string.isRequired,
 };
 
-export default Main;
+const mapStateToProps = ({activeCity, offers}) => ({
+  activeCity,
+  offers,
+});
+
+export { Main }; //keep this option for testing
+export default connect(mapStateToProps, null)(Main); //exporting the component that is connected to the store

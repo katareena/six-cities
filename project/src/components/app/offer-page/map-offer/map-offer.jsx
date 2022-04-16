@@ -17,10 +17,10 @@ function renderPoints({city: {location: {latitude, longitude}}}, map) {
     .addTo(map);
 }
 
-function MapOffer({currentCity, hotelsNearby}) {
+function MapOffer({currentCity, offersNearby}) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentCity);
-  const points = hotelsNearby;
+  const points = offersNearby;
 
   useEffect(() => {
     if (map) {
@@ -39,7 +39,7 @@ function MapOffer({currentCity, hotelsNearby}) {
 }
 
 MapOffer.propTypes = {
-  hotelsNearby: PropTypes.array.isRequired,
+  offersNearby: PropTypes.array.isRequired,
   currentCity: PropTypes.object.isRequired,
 };
 

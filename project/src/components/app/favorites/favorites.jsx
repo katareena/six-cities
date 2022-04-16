@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import cn from 'classnames';
-import hotelsProp from '../../prop-types/hotels.prop.js';
+import offersProp from '../../prop-types/offers.prop.js';
 import Header from '../header/header';
 import FavoriteList from '../favorites/favorites-list/favorites-list';
 
@@ -22,10 +22,10 @@ function renderFavoriteLists(data) {
   ));
 }
 
-function Favorites ({hotels}) {
-  const favoriteHotels = hotels.filter(({isFavorite}) => isFavorite);
-  const favoriteHotelsByCity = favoriteHotels.reduce(createDictionary, Object.create(null));
-  const FavoriteLists = renderFavoriteLists(favoriteHotelsByCity);
+function Favorites ({offers}) {
+  const favoriteoffers = offers.filter(({isFavorite}) => isFavorite);
+  const favoriteoffersByCity = favoriteoffers.reduce(createDictionary, Object.create(null));
+  const FavoriteLists = renderFavoriteLists(favoriteoffersByCity);
 
   return (
     <div className="page">
@@ -50,7 +50,7 @@ function Favorites ({hotels}) {
 }
 
 Favorites.propTypes = {
-  hotels: hotelsProp.isRequired,
+  offers: offersProp,
 };
 
 export default Favorites;

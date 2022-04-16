@@ -4,8 +4,8 @@ import { getRandomInt } from '../utils/get-random';
 import { getRandomArray } from '../utils/get-item';
 import { getAnyItem} from '../utils/get-item';
 import { getRandomCoords } from '../utils/get-random-coords';
-import { LENGTH_ID, AVATAR_URL, NUMBER_OF_HOTELS } from '../constants/common';
-import { CITIES, BOOLEANS, TYPES, IMAGES, TITLE, COMMENTS, GOODS, USERS, COORDS } from './auxiliary';
+import { CITIES, LENGTH_ID, AVATAR_URL, NUMBER_OF_OFFERS } from '../constants/common';
+import { BOOLEANS, TYPES, IMAGES, TITLE, COMMENTS, GOODS, USERS, COORDS } from './auxiliary';
 
 function generateHotel() {
   return {
@@ -23,7 +23,7 @@ function generateHotel() {
     'images': getRandomArray(IMAGES),
     'is_favorite': BOOLEANS[Math.floor(Math.random() * BOOLEANS.length)],
     'is_premium': BOOLEANS[Math.floor(Math.random() * BOOLEANS.length)],
-    'location': getRandomCoords(COORDS), //coordinates of hotels only for Amsterdam
+    'location': getRandomCoords(COORDS), //coordinates of offers only for Amsterdam
     'max_adults': getRandomInt(1, 4),
     'preview_image': getAnyItem(IMAGES),
     'price': getRandomInt(50, 300),
@@ -33,10 +33,10 @@ function generateHotel() {
   };
 }
 
-let hotels = new Array(NUMBER_OF_HOTELS).fill(undefined).map(() => generateHotel());
+let offers = new Array(NUMBER_OF_OFFERS).fill(undefined).map(() => generateHotel());
 
-hotels = toCamelCase(hotels);
+offers = toCamelCase(offers);
 
-// console.log('hotels', hotels);
+// console.log('offers', offers);
 
-export default hotels;
+export default offers;
