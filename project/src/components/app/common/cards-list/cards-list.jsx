@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Card from './card/card';
-import hotelsProp from '../../../prop-types/hotels.prop';
+import offersProp from '../../../prop-types/offers.prop';
 
 import { CardListClasses } from '../../../../constants/common';
 
@@ -19,8 +19,8 @@ function renderCard({id, ...rest}, onCardHover) {
   );
 }
 
-function CardsList({hotels, onCardHover}) {
-  const Cards = hotels.map((key) => renderCard(key, onCardHover));
+function CardsList({offers, onCardHover}) {
+  const Cards = offers.map((key) => renderCard(key, onCardHover));
   const currentPathname = window.location.pathname.split('/')[1];
 
   return (
@@ -31,7 +31,7 @@ function CardsList({hotels, onCardHover}) {
 }
 
 CardsList.propTypes = {
-  hotels: hotelsProp.isRequired,
+  offers: offersProp.isRequired,
   onCardHover: PropTypes.func.isRequired,
 };
 

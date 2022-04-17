@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { CardItemClasses } from '../../../../../constants/common';
 
-function transferToPercentage(rating) {
-  return `${(rating*100)/5}`;
+function adoptRating(rating) {
+  const starsWidth = 73;
+  const starsNumber = 5;
+  return ((starsWidth/starsNumber)*rating);
 }
 
 function renderPremiumMark(isPremium) {
@@ -46,7 +48,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: transferToPercentage({rating}) }}></span>
+            <span style={{width: adoptRating(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

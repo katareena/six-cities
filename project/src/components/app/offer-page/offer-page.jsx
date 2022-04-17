@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import cn from 'classnames';
 
 import Header from '../header/header';
@@ -6,7 +7,7 @@ import ReviewList from './review-list/review-list';
 import MapOffer from './map-offer/map-offer';
 import CardsList from '../common/cards-list/cards-list';
 
-import hotelsProp from '../../prop-types/hotels.prop';
+import offersProp from '../../prop-types/offers.prop';
 import commentsProp from '../../prop-types/comments.prop';
 
 function renderImage(img) {
@@ -37,19 +38,19 @@ function renderGoodsItem(good) {
   );
 }
 
-function adoptRatingHundred(rating) {
+function adoptRating(rating) {
   const starsWidth = 147;
   const starsNumber = 5;
   return ((starsWidth/starsNumber)*rating);
 }
 
-function Offer ({hotels, comments}) {
-  const {bedrooms, description, goods, images, isPremium, isFavorite, maxAdults, price, rating, title, type, host: {avatarUrl, isPro, name}, city, id} = hotels[0];
+function Offer ({offers, comments}) {
+  const {bedrooms, description, goods, images, isPremium, isFavorite, maxAdults, price, rating, title, type, host: {avatarUrl, isPro, name}, city, id} = offers[0];
 
   const createGallery = images.map((img) => renderImage(img));
   const createGoods = goods.map((good) => renderGoodsItem(good));
 
-  const hotelsNearby = hotels.filter((hotelItem) => hotelItem.id !== id).filter((hotelItem) => hotelItem.city.name === city.name);
+  const offersNearby = offers.filter((hotelItem) => hotelItem.id !== id).filter((hotelItem) => hotelItem.city.name === city.name);
 
   return (
     <div className="page">
@@ -80,7 +81,7 @@ function Offer ({hotels, comments}) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: adoptRatingHundred(rating)}} />
+                  <span style={{width: adoptRating(rating)}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
@@ -130,9 +131,9 @@ function Offer ({hotels, comments}) {
           </div>
 
           <MapOffer
-            hotels={hotels}
+            offers={offers}
             currentCity={city}
-            hotelsNearby={hotelsNearby}
+            offersNearby={offersNearby}
           />
 
         </section>
@@ -140,7 +141,7 @@ function Offer ({hotels, comments}) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardsList
-              hotels={hotelsNearby}
+              offers={offersNearby}
               onCardHover={()=> {}}
             />
           </section>
@@ -152,8 +153,14 @@ function Offer ({hotels, comments}) {
 }
 
 Offer.propTypes = {
-  hotels: hotelsProp.isRequired,
+  offers: offersProp.isRequired,
   comments: commentsProp.isRequired,
 };
 
-export default Offer;
+const mapStateToProps = ({comments, offers}) => ({
+  comments,
+  offers,
+});
+
+export { Offer };
+export default connect(mapStateToProps, null)(Offer);
