@@ -11,12 +11,35 @@ import SortMenu from './sort-menu/sort-menu';
 import citiesProp from '../../prop-types/cities.prop';
 import offersProp from '../../prop-types/offers.prop';
 
-function Main({offers, cities, activeCity}) {
+function sortingOffers(activeSortingValue) {
+  // switch (activeSortingValue) {
+  //   case 'Price: low to high':
+  //     return (prev, next) => prev.price - next.price;
+  //   case 'Price: high to low':
+  //     return (prev, next) => next.price - prev.price;
+  //   case 'Top rated first':
+  //     return (prev, next) => next.rating - prev.rating;
+  //   default:
+  //     return offers;
+  // }
+
+  if(activeSortingValue === 'Price: low to high') {
+    return (prev, next) => prev.price - next.price;
+  }
+
+  if(activeSortingValue === 'Price: high to low') {
+    return (prev, next) => next.price - prev.price;
+  }
+
+  if(activeSortingValue === 'Top rated first') {
+    return (prev, next) => next.rating - prev.rating;
+  }
+}
+
+function Main({offers, cities, activeCity, activeSortingValue}) {
   const [activeCard, setActiveCard] = useState('0');
-  const [openSort, setOpenSort] = useState(false);
   const onCardHover = (id) => setActiveCard(id);
-  const onSortClick = () => setOpenSort(!openSort);
-  const actualoffers = offers.filter((offer) => offer.city.name === activeCity);
+  const actualoffers = offers.filter((offer) => offer.city.name === activeCity).sort(sortingOffers(activeSortingValue));
 
   // console.log(actualoffers);
   // console.log(offers);
@@ -40,16 +63,7 @@ function Main({offers, cities, activeCity}) {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{actualoffers.length} places to stay in {activeCity}</b>
 
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by &thinsp;</span>
-                <span className="places__sorting-type" tabIndex="0" onClick={onSortClick}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <SortMenu openSort={openSort}/>
-              </form>
+              <SortMenu />
 
               <CardsList
                 offers={actualoffers}
@@ -77,11 +91,13 @@ Main.propTypes = {
   offers: offersProp.isRequired,
   cities: citiesProp.isRequired,
   activeCity: PropTypes.string.isRequired,
+  activeSortingValue: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({activeCity, offers}) => ({
+const mapStateToProps = ({activeCity, offers, activeSortingValue}) => ({
   activeCity,
   offers,
+  activeSortingValue,
 });
 
 export { Main }; //keep this option for testing

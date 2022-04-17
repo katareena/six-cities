@@ -38,7 +38,7 @@ function renderGoodsItem(good) {
   );
 }
 
-function adoptRatingHundred(rating) {
+function adoptRating(rating) {
   const starsWidth = 147;
   const starsNumber = 5;
   return ((starsWidth/starsNumber)*rating);
@@ -81,7 +81,7 @@ function Offer ({offers, comments}) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: adoptRatingHundred(rating)}} />
+                  <span style={{width: adoptRating(rating)}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>

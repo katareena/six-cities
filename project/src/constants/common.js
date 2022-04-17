@@ -76,3 +76,7 @@ export const AppRout = {
   FAVORITES: '/favorites',
   OFFER: '/offer/:id',
 };
+
+export const DEFAULT_SORTING = 'Popular';
+
+export const SORTING_VALUES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
