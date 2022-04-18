@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-function adoptRatingHundred(rating) {
-  const starsWidth = 98;
-  const starsNumber = 5;
-  return ((starsWidth/starsNumber)*rating);
-}
+import { adoptRating } from '../../../../../utils/adopt-rating';
 
 function ReviewItem({avatarUrl, name, rating, date, comment}) {
   return (
@@ -21,7 +16,7 @@ function ReviewItem({avatarUrl, name, rating, date, comment}) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: adoptRatingHundred(rating)}} />
+            <span style={{width: adoptRating(98, rating)}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

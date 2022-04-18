@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
+import { adoptRating } from '../../../utils/adopt-rating';
 
 import Header from '../header/header';
 import ReviewList from './review-list/review-list';
@@ -36,12 +37,6 @@ function renderGoodsItem(good) {
       {good}
     </li>
   );
-}
-
-function adoptRating(rating) {
-  const starsWidth = 147;
-  const starsNumber = 5;
-  return ((starsWidth/starsNumber)*rating);
 }
 
 function Offer ({offers, comments}) {
@@ -81,7 +76,7 @@ function Offer ({offers, comments}) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: adoptRating(rating)}} />
+                  <span style={{width: adoptRating(147, rating)}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
