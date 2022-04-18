@@ -12,36 +12,24 @@ import citiesProp from '../../prop-types/cities.prop';
 import offersProp from '../../prop-types/offers.prop';
 
 function sortingOffers(activeSortingValue) {
-  // switch (activeSortingValue) {
-  //   case 'Price: low to high':
-  //     return (prev, next) => prev.price - next.price;
-  //   case 'Price: high to low':
-  //     return (prev, next) => next.price - prev.price;
-  //   case 'Top rated first':
-  //     return (prev, next) => next.rating - prev.rating;
-  //   default:
-  //     return offers;
-  // }
-
-  if(activeSortingValue === 'Price: low to high') {
-    return (prev, next) => prev.price - next.price;
-  }
-
-  if(activeSortingValue === 'Price: high to low') {
-    return (prev, next) => next.price - prev.price;
-  }
-
-  if(activeSortingValue === 'Top rated first') {
-    return (prev, next) => next.rating - prev.rating;
+  switch (activeSortingValue) {
+    case 'Price: low to high':
+      return (prev, next) => prev.price - next.price;
+    case 'Price: high to low':
+      return (prev, next) => next.price - prev.price;
+    case 'Top rated first':
+      return (prev, next) => next.rating - prev.rating;
+    default:
+      break;
   }
 }
 
 function Main({offers, cities, activeCity, activeSortingValue}) {
   const [activeCard, setActiveCard] = useState('0');
   const onCardHover = (id) => setActiveCard(id);
-  const actualoffers = offers.filter((offer) => offer.city.name === activeCity).sort(sortingOffers(activeSortingValue));
+  const actualOffers = offers.filter((offer) => offer.city.name === activeCity).sort(sortingOffers(activeSortingValue));
 
-  // console.log(actualoffers);
+  // console.log(actualOffers);
   // console.log(offers);
   // console.log(cities);
   // console.log(typeof activeCard, activeCard);
@@ -61,12 +49,12 @@ function Main({offers, cities, activeCity, activeSortingValue}) {
             {/* replace with cities__no-places */}
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{actualoffers.length} places to stay in {activeCity}</b>
+              <b className="places__found">{actualOffers.length} places to stay in {activeCity}</b>
 
               <SortMenu />
 
               <CardsList
-                offers={actualoffers}
+                offers={actualOffers}
                 onCardHover={onCardHover}
               />
             </section>

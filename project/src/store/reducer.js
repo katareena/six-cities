@@ -5,36 +5,52 @@ import users from '../mocks/users';
 import comments from '../mocks/comments';
 
 const initialState = {
-  activeCity: DEFAULT_CITY,
   offers,
   users,
   comments,
-  activeSortingValue: DEFAULT_SORTING,
+  activeCity: DEFAULT_CITY,
   isOpenSortMenu: false,
+  activeSortingValue: DEFAULT_SORTING,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.ADD_OFFERS:
+      return {
+        ...state, // rest operator - collapses elements into an array
+        offers: action.payload,
+      };
+
+    case ActionType.ADD_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+
+    case ActionType.ADD_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload,
+      };
+
     case ActionType.CHANGE_CITY:
       return {
         ...state,
         activeCity: action.payload,
       };
-    case ActionType.ADD_OFFERS:
-      return {
-        ...state,
-        offers: action.payload,
-      };
-    case ActionType.CHANGE_SORTING_VALUE:
-      return {
-        ...state,
-        activeSortingValue: action.payload,
-      };
+
     case ActionType.CLICK_ON_SORT_MENU:
       return {
         ...state,
         isOpenSortMenu: action.payload,
       };
+
+    case ActionType.CHANGE_SORTING_VALUE:
+      return {
+        ...state,
+        activeSortingValue: action.payload,
+      };
+
     default:
       return state;
   }
