@@ -25,7 +25,7 @@ function sortingOffers(activeSortingValue) {
 }
 
 function Main({offers, cities, activeCity, activeSortingValue}) {
-  const [activeCard, setActiveCard] = useState('0');
+  const [activeCard, setActiveCard] = useState(0);
   const onCardHover = (id) => setActiveCard(id);
   const actualOffers = offers.filter((offer) => offer.city.name === activeCity).sort(sortingOffers(activeSortingValue));
 

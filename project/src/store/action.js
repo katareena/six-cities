@@ -18,22 +18,27 @@ export const ActionCreator =  {
     type: ActionType.ADD_OFFERS,
     payload: offers,
   }),
+
   addUsers: (users) => ({
     type: ActionType.ADD_USERS,
     payload: users,
   }),
+
   addComments: (comments) => ({
     type: ActionCreator.ADD_COMMENTS,
     payload: comments,
   }),
+
   changeCity: (city) => ({
     type: ActionType.CHANGE_CITY,
     payload: city,
   }),
+
   clickOnSortMenu: (isOpenSortMenu) => ({
     type: ActionType.CLICK_ON_SORT_MENU,
     payload: isOpenSortMenu,
   }),
+
   changeSortingValue: (sortingValue) => ({
     type: ActionType.CHANGE_SORTING_VALUE,
     payload: sortingValue,
@@ -43,22 +48,27 @@ export const ActionCreator =  {
     type: ActionType.LOAD_OFFERS,
     payload: offers,
   }),
-  loadRoomItem: (room) => ({
-    type: ActionType.LOAD_ROOM_ITEM,
-    payload: room,
-  }),
+
   loadComments: (comments) => ({
     type: ActionType.LOAD_COMMENTS,
     payload: comments,
   }),
+
+  loadRoomItem: (room) => ({
+    type: ActionType.LOAD_ROOM_ITEM,
+    payload: room,
+  }),
+
   loadNearby: (nearby) => ({
     type: ActionType.LOAD_NEARBY,
     payload: nearby,
   }),
+
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
   }),
+
   logout: () => ({
     type: ActionType.LOGOUT,
   }),

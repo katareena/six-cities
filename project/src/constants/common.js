@@ -15,11 +15,20 @@ export const CardItemClasses = {
   'offer': 'near-places__card place-card',
 };
 
-export const AppRout = {
+export const AppRoute = {
   ROOT: '/',
   LOGIN: '/login',
   FAVORITES: '/favorites',
   OFFER: '/offer/:id',
+};
+
+export const APIRoute = {
+  OFFERS: '/hotels',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+  ROOM: '/hotels/',
+  NEARBY: '/hotels/:hotel_id/nearby',
+  COMMENTS: '/comments/:hotel_id',
 };
 
 export const AuthorizationStatus = {

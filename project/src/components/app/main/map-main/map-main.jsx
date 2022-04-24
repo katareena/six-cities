@@ -47,7 +47,7 @@ Map.propTypes = {
   offers: offersProp,
   cities: citiesProp.isRequired,
   activeCity: PropTypes.string.isRequired,
-  activeCard: PropTypes.string,
+  activeCard: PropTypes.number,
 };
 
 export default Map;

@@ -14,7 +14,7 @@ function renderCard({id, ...rest}, onCardHover) {
       key={id}
 
       onMouseOver = {() => onCardHover(id)}
-      onMouseLeave = {() => onCardHover('0')}
+      onMouseLeave = {() => onCardHover(0)}
     />
   );
 }

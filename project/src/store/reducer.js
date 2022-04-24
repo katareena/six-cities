@@ -1,17 +1,16 @@
 import { ActionType } from './action';
 import { DEFAULT_CITY, DEFAULT_SORTING, AuthorizationStatus } from '../constants/common';
-import offers from '../mocks/offers';
-import users from '../mocks/users';
-import comments from '../mocks/comments';
 
 const initialState = {
-  offers,
-  users,
-  comments,
+  offers: [],
+  users: [],
+  comments: [],
   activeCity: DEFAULT_CITY,
   isOpenSortMenu: false,
   activeSortingValue: DEFAULT_SORTING,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  isOffersLoaded: false,
+  isCommentsLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -56,18 +55,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: action.payload,
-      };
-
-    case ActionType.LOAD_ROOM_ITEM:
-      return {
-        ...state,
-        selectedRoom: action.payload,
+        isOffersLoaded: true,
       };
 
     case ActionType.LOAD_COMMENTS:
       return {
         ...state,
         comments: action.payload,
+        isCommentsLoaded: true,
+      };
+
+    case ActionType.LOAD_ROOM_ITEM:
+      return {
+        ...state,
+        selectedRoom: action.payload,
       };
 
     case ActionType.LOAD_NEARBY:

@@ -66,7 +66,7 @@ Card.propTypes = {
   type: PropTypes.string.isRequired,
   onMouseOver: PropTypes.func,
   onMouseLeave: PropTypes.func,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default Card;
