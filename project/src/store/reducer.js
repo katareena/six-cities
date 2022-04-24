@@ -11,6 +11,7 @@ const initialState = {
   activeCity: DEFAULT_CITY,
   isOpenSortMenu: false,
   activeSortingValue: DEFAULT_SORTING,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 const reducer = (state = initialState, action) => {
