@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
-import { adoptRating } from '../../../../../utils/adopt-rating'
+import { adoptRating } from '../../../../../utils/adopt-rating';
 import { CardItemClasses } from '../../../../../constants/common';
 
 function renderPremiumMark(isPremium) {
