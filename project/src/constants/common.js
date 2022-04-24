@@ -4,6 +4,31 @@ export const NUMBER_OF_USERS = 10;
 export const NUMBER_OF_OFFERS = 20;
 export const NUMBER_OF_COMMENTS = 3;
 export const AVATAR_URL = 'https://i.pravatar.cc/128';
+
+export const CardListClasses = {
+  '': 'cities__places-list places__list tabs__content',
+  'offer': 'near-places__list places__list',
+};
+
+export const CardItemClasses = {
+  '': 'cities__place-card place-card',
+  'offer': 'near-places__card place-card',
+};
+
+export const AppRout = {
+  ROOT: '/',
+  LOGIN: '/login',
+  FAVORITES: '/favorites',
+  OFFER: '/offer/:id',
+};
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN', //default, when loading
+};
+
+// ----- UI -----
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
@@ -59,23 +84,6 @@ export const CITIES = [
 ];
 
 export const DEFAULT_CITY = CITIES[3].name;
-
-export const CardListClasses = {
-  '': 'cities__places-list places__list tabs__content',
-  'offer': 'near-places__list places__list',
-};
-
-export const CardItemClasses = {
-  '': 'cities__place-card place-card',
-  'offer': 'near-places__card place-card',
-};
-
-export const AppRout = {
-  ROOT: '/',
-  LOGIN: '/login',
-  FAVORITES: '/favorites',
-  OFFER: '/offer/:id',
-};
 
 export const DEFAULT_SORTING = 'Popular';
 
