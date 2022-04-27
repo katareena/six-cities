@@ -1,5 +1,5 @@
 import { ActionCreator } from './action.js';
-import { AuthorizationStatus, APIRoute} from '../constants/common';
+import { AuthorizationStatus, APIRoute, AppRoute} from '../constants/common';
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -12,7 +12,7 @@ export const fetchRoomItem = (roomId) => (dispatch, _getState, api) => (
 );
 
 export const fetchComments = (roomId) => (dispatch, _getState, api) => (
-  api.get(`/comments/${roomId}`)
+  api.get(`/comments/${roomId}`) // return promise
     .then(({data}) => dispatch(ActionCreator.loadComments(data)))
 );
 
@@ -33,7 +33,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => localStorage.setItem('token', data.token))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    // .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (

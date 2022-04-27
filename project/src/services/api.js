@@ -4,6 +4,10 @@ import { toCamelCase } from '../utils/to-camel-snake-case';
 const BACKEND_URL = 'https://7.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
 
+const HttpCode = {
+  UNAUTHORIZED: 401,
+};
+
 const token = localStorage.getItem('token') ?? ''; // ?? - operator Nullish Coalsing
 
 export const createAPI = (onUnauthorized) => {
@@ -18,7 +22,13 @@ export const createAPI = (onUnauthorized) => {
   const onSuccess = (response) => toCamelCase(response);
 
   const onFail = (err) => {
-    throw err;
+    const {response} = err;
+
+    if (response.status === HttpCode.UNAUTHORIZED) {
+      onUnauthorized();
+    }
+
+    return Promise.reject(err);
   };
 
   api.interceptors.response.use(onSuccess, onFail);

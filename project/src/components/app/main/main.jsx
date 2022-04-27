@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; // one of the ways to connect React to the Redux(store)
 
@@ -24,13 +24,12 @@ function sortingOffers(activeSortingValue) {
   }
 }
 
-function Main({offers, cities, activeCity, activeSortingValue}) {
-  const [activeCard, setActiveCard] = useState(0);
-  const onCardHover = (id) => setActiveCard(id);
+function Main({offers, cities, activeCity, activeSortingValue, idActiveCard}) {
   const actualOffers = offers.filter((offer) => offer.city.name === activeCity).sort(sortingOffers(activeSortingValue));
 
+  // console.log(idActiveCard);
   // console.log(actualOffers);
-  // console.log(offers);
+  console.log(offers);
   // console.log(cities);
   // console.log(typeof activeCard, activeCard);
   // console.log(activeCity);
@@ -55,7 +54,6 @@ function Main({offers, cities, activeCity, activeSortingValue}) {
 
               <CardsList
                 offers={actualOffers}
-                onCardHover={onCardHover}
               />
             </section>
 
@@ -64,7 +62,7 @@ function Main({offers, cities, activeCity, activeSortingValue}) {
                 offers={offers}
                 cities={cities}
                 activeCity={activeCity}
-                activeCard={activeCard}
+                activeCard={idActiveCard}
               />
             </div>
 
@@ -80,12 +78,14 @@ Main.propTypes = {
   cities: citiesProp.isRequired,
   activeCity: PropTypes.string.isRequired,
   activeSortingValue: PropTypes.string.isRequired,
+  idActiveCard: PropTypes.number,
 };
 
-const mapStateToProps = ({activeCity, offers, activeSortingValue}) => ({
+const mapStateToProps = ({activeCity, offers, activeSortingValue, idActiveCard}) => ({
   activeCity,
   offers,
   activeSortingValue,
+  idActiveCard,
 });
 
 export { Main }; //keep this option for testing

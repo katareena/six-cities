@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
 import { AppRoute } from './../../constants/common';
+import { PrivateRoute } from './private-route/private-route';
+import browserHistory from '../../browser-history';
 import LoadingScreen from './loading-screen/loading-screen';
 import SignIn from './sign-in/sign-in';
 import Main from './main/main.jsx';
@@ -13,22 +15,24 @@ import citiesProp from '../prop-types/cities.prop';
 
 function App({cities, isOffersLoaded}) {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path={AppRoute.ROOT} exact render={(p) => (
+        <Route exact path={AppRoute.LOGIN}>
+          <SignIn />
+        </Route>
+
+        <Route exact path={AppRoute.ROOT} render={(p) => (
           !isOffersLoaded ? <LoadingScreen /> : <Main {...p} cities={cities}/>
         )}
         />
 
-        <Route path={AppRoute.LOGIN} exact>
-          <SignIn />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={(p) => <Favorites {...p} />}
+        />
 
-        <Route path={AppRoute.FAVORITES} exact>
-          <Favorites />
-        </Route>
-
-        <Route path={AppRoute.OFFER} exact>
+        <Route exact path={AppRoute.OFFER}>
           <OfferPage />
         </Route>
 

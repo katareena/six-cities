@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
+
 import { adoptRating } from '../../../utils/adopt-rating';
 
 import Header from '../header/header';
@@ -39,8 +42,10 @@ function renderGoodsItem(good) {
   );
 }
 
-function Offer ({offers, comments}) {
-  const {bedrooms, description, goods, images, isPremium, isFavorite, maxAdults, price, rating, title, type, host: {avatarUrl, isPro, name}, city, id} = offers[0];
+function Offer ({offers, comments, idActiveCard}) {
+  const activeOffer = offers.filter((offer) => offer.id === idActiveCard);
+  console.log(activeOffer);
+  const {bedrooms, description, goods, images, isPremium, isFavorite, maxAdults, price, rating, title, type, host: {avatarUrl, isPro, name}, city, id} = activeOffer[0];
 
   const createGallery = images.map((img) => renderImage(img));
   const createGoods = goods.map((good) => renderGoodsItem(good));
@@ -150,11 +155,13 @@ function Offer ({offers, comments}) {
 Offer.propTypes = {
   offers: offersProp.isRequired,
   comments: commentsProp.isRequired,
+  idActiveCard: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = ({comments, offers}) => ({
+const mapStateToProps = ({comments, offers, idActiveCard}) => ({
   comments,
   offers,
+  idActiveCard,
 });
 
 export { Offer };

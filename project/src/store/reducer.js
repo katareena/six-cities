@@ -5,32 +5,44 @@ const initialState = {
   offers: [],
   users: [],
   comments: [],
+  nearby: [],
   activeCity: DEFAULT_CITY,
+  idActiveCard: 0,
   isOpenSortMenu: false,
   activeSortingValue: DEFAULT_SORTING,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isOffersLoaded: false,
   isCommentsLoaded: false,
+  url: '',
+  authUser: '',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.ADD_OFFERS:
-      return {
-        ...state, // rest operator - collapses elements into an array
-        offers: action.payload,
-      };
-
-    case ActionType.ADD_USERS:
+    case ActionType.LOAD_OFFERS:
       return {
         ...state,
-        users: action.payload,
+        offers: action.payload,
+        isOffersLoaded: true,
       };
 
-    case ActionType.ADD_COMMENTS:
+    case ActionType.LOAD_COMMENTS:
       return {
         ...state,
         comments: action.payload,
+        isCommentsLoaded: true,
+      };
+
+    case ActionType.LOAD_ROOM_ITEM:
+      return {
+        ...state,
+        idActiveCard: action.payload,
+      };
+
+    case ActionType.LOAD_NEARBY:
+      return {
+        ...state,
+        nearby: action.payload,
       };
 
     case ActionType.CHANGE_CITY:
@@ -51,30 +63,10 @@ const reducer = (state = initialState, action) => {
         activeSortingValue: action.payload,
       };
 
-    case ActionType.LOAD_OFFERS:
+    case ActionType.SET_ID_ACTIVE_CARD:
       return {
         ...state,
-        offers: action.payload,
-        isOffersLoaded: true,
-      };
-
-    case ActionType.LOAD_COMMENTS:
-      return {
-        ...state,
-        comments: action.payload,
-        isCommentsLoaded: true,
-      };
-
-    case ActionType.LOAD_ROOM_ITEM:
-      return {
-        ...state,
-        selectedRoom: action.payload,
-      };
-
-    case ActionType.LOAD_NEARBY:
-      return {
-        ...state,
-        nearby: action.payload,
+        idActiveCard: action.payload,
       };
 
     case ActionType.REQUIRED_AUTHORIZATION:
@@ -87,6 +79,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+      };
+
+    case ActionType.REDIRECT_TO_ROUTE:
+      return {
+        ...state,
+        url: action.payload,
+      };
+
+    case ActionType.SET_AUTH_USER:
+      return {
+        ...state,
+        authUser: action.payload,
       };
 
     default:

@@ -92,7 +92,7 @@ export const CITIES = [
   },
 ];
 
-export const DEFAULT_CITY = CITIES[3].name;
+export const DEFAULT_CITY = CITIES[0].name;
 
 export const DEFAULT_SORTING = 'Popular';
 
