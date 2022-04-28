@@ -1,8 +1,8 @@
 export const ActionType = {
   LOAD_OFFERS: 'data/loadOffers',
-  LOAD_ROOM_ITEM: 'data/loadRoomItem',
+  LOAD_OFFER_ITEM: 'data/loadOfferItem',
   LOAD_COMMENTS: 'data/loadComments',
-  LOAD_NEARBY: 'data/loadNearby',
+  LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
   CHANGE_CITY: 'main/changeCity',
   CLICK_ON_SORT_MENU: 'main/clickOnSortMenu',
   CHANGE_SORTING_VALUE: 'main/changeSortingValue',
@@ -11,6 +11,7 @@ export const ActionType = {
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'main/redirectToRoute',
   SET_AUTH_USER: 'user/setAuthUser',
+  POSTED_COMMENT: 'data/postedComment',
 };
 
 export const ActionCreator =  {
@@ -24,14 +25,14 @@ export const ActionCreator =  {
     payload: comments,
   }),
 
-  loadRoomItem: (room) => ({
-    type: ActionType.LOAD_ROOM_ITEM,
-    payload: room,
+  loadOfferItem: (activeOffer) => ({
+    type: ActionType.LOAD_OFFER_ITEM,
+    payload: activeOffer,
   }),
 
-  loadNearby: (nearby) => ({
-    type: ActionType.LOAD_NEARBY,
-    payload: nearby,
+  loadOffersNearby: (offersNearby) => ({
+    type: ActionType.LOAD_OFFERS_NEARBY,
+    payload: offersNearby,
   }),
 
   changeCity: (city) => ({
@@ -71,5 +72,10 @@ export const ActionCreator =  {
   setActiveUser: (authData) => ({
     type: ActionType.SET_AUTH_USER,
     payload: authData,
+  }),
+
+  postedComment: (isPostedComment) => ({
+    type: ActionType.POSTED_COMMENT,
+    payload: isPostedComment,
   }),
 };

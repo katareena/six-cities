@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ActionCreator } from '../../../../../store/action';
 import cn from 'classnames';
 import { adoptRating } from '../../../../../utils/adopt-rating';
 import { CardItemClasses, AppRoute, AuthorizationStatus } from '../../../../../constants/common';
@@ -86,12 +85,6 @@ const mapStateToProps = ({authorizationStatus, idActiveCard}) => ({
   authorizationStatus,
   idActiveCard,
 });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   setIdActiveCard(id) {
-//     dispatch(ActionCreator.setIdActiveCard(id));
-//   },
-// });
 
 export {Card};
 export default connect(mapStateToProps, null)(Card);

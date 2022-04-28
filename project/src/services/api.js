@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { toCamelCase } from '../utils/to-camel-snake-case';
 
 const BACKEND_URL = 'https://7.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -19,7 +18,7 @@ export const createAPI = (onUnauthorized) => {
     },
   });
 
-  const onSuccess = (response) => toCamelCase(response);
+  const onSuccess = (response) => response;
 
   const onFail = (err) => {
     const {response} = err;

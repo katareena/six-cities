@@ -4,15 +4,15 @@ export default PropTypes.arrayOf(
   PropTypes.shape({
     comment: PropTypes.string.isRequired,
     // date: dayjs().subtract((getRandomInt(1, 5)), 'month').format('MM/YYYY'),
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
     user: PropTypes.shape({
-      avatarUrl: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      name: PropTypes.string.isRequired,
-      token: PropTypes.string.isRequired,
+      avatarUrl: PropTypes.string,
+      email: PropTypes.string,
+      id: PropTypes.number,
+      isPro: PropTypes.bool,
+      name: PropTypes.string,
+      token: PropTypes.string,
     }),
   }),
 );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
 import { AppRoute } from './../../constants/common';
-import { PrivateRoute } from './private-route/private-route';
+import PrivateRoute from './private-route/private-route';
 import browserHistory from '../../browser-history';
 import LoadingScreen from './loading-screen/loading-screen';
 import SignIn from './sign-in/sign-in';
@@ -13,7 +13,7 @@ import NotFoundPage from './not-found/not-found';
 import OfferPage from './offer-page/offer-page';
 import citiesProp from '../prop-types/cities.prop';
 
-function App({cities, isOffersLoaded}) {
+function App({cities, isOffersLoaded, authorizationStatus}) {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -29,8 +29,9 @@ function App({cities, isOffersLoaded}) {
         <PrivateRoute
           exact
           path={AppRoute.FAVORITES}
-          render={(p) => <Favorites {...p} />}
-        />
+          render={() => <Favorites />}
+        >
+        </PrivateRoute>
 
         <Route exact path={AppRoute.OFFER}>
           <OfferPage />
@@ -48,10 +49,12 @@ function App({cities, isOffersLoaded}) {
 App.propTypes = {
   cities: citiesProp.isRequired,
   isOffersLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   isOffersLoaded: state.isOffersLoaded,
+  authorizationStatus: state.authorizationStatus,
 });
 
 export {App};

@@ -20,6 +20,7 @@ export const AppRoute = {
   LOGIN: '/login',
   FAVORITES: '/favorites',
   OFFER: '/offer/:id',
+  NOT_FOUND: '/not_found',
 };
 
 export const APIRoute = {
@@ -27,8 +28,14 @@ export const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   ROOM: '/hotels/',
-  NEARBY: '/hotels/:hotel_id/nearby',
-  COMMENTS: '/comments/:hotel_id',
+  // NEARBY: '/hotels/:hotel_id/nearby',
+  COMMENTS: '/comments/',
+};
+
+export const ResponseCodes = {
+  SUCCESS: 200,
+  NOT_FOUND: 404,
+  BAD_REQUEST: 400,
 };
 
 export const AuthorizationStatus = {

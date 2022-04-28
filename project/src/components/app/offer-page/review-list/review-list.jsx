@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import ReviewItem from './review-item/review-item';
 import FormComment from './form-comment/form-comment';
 import commentsProp from '../../../prop-types/comments.prop';
+import { AuthorizationStatus } from '../../../../constants/common';
 
 function renderReview({user: {avatarUrl, name}, rating, comment, date, id}) {
   return (
@@ -17,7 +20,7 @@ function renderReview({user: {avatarUrl, name}, rating, comment, date, id}) {
   );
 }
 
-function ReviewList({comments}) {
+function ReviewList({comments, authorizationStatus, offerId}) {
   const Reviews = comments.map((comment) => renderReview(comment));
 
   return (
@@ -26,14 +29,25 @@ function ReviewList({comments}) {
       <ul className="reviews__list">
         {Reviews}
       </ul>
-      {/* only after login */}
-      <FormComment />
+      {authorizationStatus === AuthorizationStatus.AUTH && <FormComment offerId={offerId}/>}
     </section>
   );
 }
 
 ReviewList.propTypes = {
   comments: commentsProp,
+  authorizationStatus: PropTypes.string.isRequired,
+  offerId: PropTypes.string.isRequired,
 };
 
-export default ReviewList;
+const mapStateToProps = ({comments, authorizationStatus}) => ({
+  comments,
+  authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+export { ReviewList };
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewList);

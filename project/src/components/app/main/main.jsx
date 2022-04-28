@@ -29,7 +29,7 @@ function Main({offers, cities, activeCity, activeSortingValue, idActiveCard}) {
 
   // console.log(idActiveCard);
   // console.log(actualOffers);
-  console.log(offers);
+  // console.log(offers);
   // console.log(cities);
   // console.log(typeof activeCard, activeCard);
   // console.log(activeCity);

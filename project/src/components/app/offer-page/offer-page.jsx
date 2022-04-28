@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-
-import { adoptRating } from '../../../utils/adopt-rating';
+import { fetchOfferItem, fetchNearby, fetchComments } from '../../../store/api-actions';
 
 import Header from '../header/header';
 import ReviewList from './review-list/review-list';
 import MapOffer from './map-offer/map-offer';
 import CardsList from '../common/cards-list/cards-list';
-
+import LoadingScrin from '../loading-screen/loading-screen';
 import offersProp from '../../prop-types/offers.prop';
-import commentsProp from '../../prop-types/comments.prop';
+import { adoptRating } from '../../../utils/adopt-rating';
 
 function renderImage(img) {
   return (
@@ -42,15 +41,22 @@ function renderGoodsItem(good) {
   );
 }
 
-function Offer ({offers, comments, idActiveCard}) {
-  const activeOffer = offers.filter((offer) => offer.id === idActiveCard);
-  console.log(activeOffer);
-  const {bedrooms, description, goods, images, isPremium, isFavorite, maxAdults, price, rating, title, type, host: {avatarUrl, isPro, name}, city, id} = activeOffer[0];
+function Offer ({activeOffer, offersNearby, onLoad, isOfferItemLoaded}) {
+  const {id} = useParams();
 
-  const createGallery = images.map((img) => renderImage(img));
+  useEffect(() => {
+    onLoad(id);
+  }, [id, onLoad]);
+
+  if (!isOfferItemLoaded) {
+    return (
+      <LoadingScrin />
+    );
+  }
+
+  const {bedrooms, description, goods, images, isPremium, isFavorite, maxAdults, price, rating, title, type, host: {avatarUrl, isPro, name}, city} = activeOffer;
+  const createGallery = images.slice(0, 6).map((img) => renderImage(img));
   const createGoods = goods.map((good) => renderGoodsItem(good));
-
-  const offersNearby = offers.filter((hotelItem) => hotelItem.id !== id).filter((hotelItem) => hotelItem.city.name === city.name);
 
   return (
     <div className="page">
@@ -117,7 +123,7 @@ function Offer ({offers, comments, idActiveCard}) {
                     {name}
                   </span>
                   <span className="property__user-status">
-                    {isPro ? 'Pro' : ''}
+                    {isPro && 'Pro'}
                   </span>
                 </div>
                 <div className="property__description">
@@ -126,43 +132,77 @@ function Offer ({offers, comments, idActiveCard}) {
                   </p>
                 </div>
               </div>
-              <ReviewList comments={comments}/>
+              <ReviewList offerId={id} />
             </div>
           </div>
-
           <MapOffer
-            offers={offers}
+            activeOffer={activeOffer}
             currentCity={city}
             offersNearby={offersNearby}
           />
-
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardsList
               offers={offersNearby}
-              onCardHover={()=> {}}
+              onCardHover={() => {}}
             />
           </section>
         </div>
       </main>
     </div>
-
   );
 }
 
 Offer.propTypes = {
-  offers: offersProp.isRequired,
-  comments: commentsProp.isRequired,
-  idActiveCard: PropTypes.number.isRequired,
+  offersNearby: offersProp,
+  onLoad: PropTypes.func.isRequired,
+  isOfferItemLoaded: PropTypes.bool.isRequired,
+
+  activeOffer: PropTypes.shape({
+    bedrooms: PropTypes.number,
+    city: PropTypes.shape({
+      location: PropTypes.objectOf(PropTypes.number),
+      name: PropTypes.string.isRequired,
+    }),
+    description: PropTypes.string.isRequired,
+    goods: PropTypes.array,
+    host: PropTypes.shape({
+      avatarUrl: PropTypes.string,
+      id: PropTypes.number.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+
+    id: PropTypes.number.isRequired,
+    images: PropTypes.array,
+    isPremium: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+
+    maxAdults: PropTypes.number.isRequired,
+    previewImage: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }),
 };
 
-const mapStateToProps = ({comments, offers, idActiveCard}) => ({
-  comments,
-  offers,
-  idActiveCard,
+const mapStateToProps = ({activeCity, activeOffer, offersNearby, isOfferItemLoaded}) => ({
+  activeCity,
+  activeOffer,
+  offersNearby,
+  isOfferItemLoaded,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoad(id) {
+    dispatch(fetchOfferItem(id));
+    dispatch(fetchNearby(id));
+    dispatch(fetchComments(id));
+  },
 });
 
 export { Offer };
-export default connect(mapStateToProps, null)(Offer);
+export default connect(mapStateToProps, mapDispatchToProps)(Offer);

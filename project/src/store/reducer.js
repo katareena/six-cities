@@ -5,16 +5,24 @@ const initialState = {
   offers: [],
   users: [],
   comments: [],
-  nearby: [],
+  offersNearby: [],
+  activeOffer: null,
   activeCity: DEFAULT_CITY,
   idActiveCard: 0,
   isOpenSortMenu: false,
   activeSortingValue: DEFAULT_SORTING,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isOffersLoaded: false,
+  isOfferItemLoaded: false,
   isCommentsLoaded: false,
+  isOffersNearbyLoaded: false,
   url: '',
   authUser: '',
+  postedComment: {
+    idPostedComment: false,
+    comment: '',
+    rating: 0,
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,16 +41,18 @@ const reducer = (state = initialState, action) => {
         isCommentsLoaded: true,
       };
 
-    case ActionType.LOAD_ROOM_ITEM:
+    case ActionType.LOAD_OFFER_ITEM:
       return {
         ...state,
-        idActiveCard: action.payload,
+        activeOffer: action.payload,
+        isOfferItemLoaded: true,
       };
 
-    case ActionType.LOAD_NEARBY:
+    case ActionType.LOAD_OFFERS_NEARBY:
       return {
         ...state,
-        nearby: action.payload,
+        offersNearby: action.payload,
+        isOffersNearbyLoaded: true,
       };
 
     case ActionType.CHANGE_CITY:
@@ -91,6 +101,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authUser: action.payload,
+      };
+
+    case ActionType.POSTED_COMMENT:
+      return {
+        ...state,
+        postedComment: {
+          isPostedComment: action.payload.isPostedComment,
+          comment: action.payload.comment,
+          rating: action.payload.rating,
+        },
       };
 
     default:
