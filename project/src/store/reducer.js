@@ -19,9 +19,10 @@ const initialState = {
   url: '',
   authUser: '',
   postedComment: {
-    idPostedComment: false,
+    isPostedComment: false,
     comment: '',
     rating: 0,
+    isErrorPostedComment: false,
   },
 };
 
@@ -110,6 +111,7 @@ const reducer = (state = initialState, action) => {
           isPostedComment: action.payload.isPostedComment,
           comment: action.payload.comment,
           rating: action.payload.rating,
+          isErrorPostedComment: action.payload.isErrorPostedComment,
         },
       };
 

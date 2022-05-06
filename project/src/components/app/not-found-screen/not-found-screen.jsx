@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from './../header/header.jsx';
+import Header from '../header/header.jsx';
 import { Link } from 'react-router-dom';
 
-function NotFoundPage () {
+function NotFoundScreen () {
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -14,4 +14,4 @@ function NotFoundPage () {
   );
 }
 
-export default NotFoundPage;
+export default NotFoundScreen;

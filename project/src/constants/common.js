@@ -21,6 +21,7 @@ export const AppRoute = {
   FAVORITES: '/favorites',
   OFFER: '/offer/:id',
   NOT_FOUND: '/not_found',
+  ERROR: '/error',
 };
 
 export const APIRoute = {
@@ -28,7 +29,6 @@ export const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   ROOM: '/hotels/',
-  // NEARBY: '/hotels/:hotel_id/nearby',
   COMMENTS: '/comments/',
 };
 
@@ -104,3 +104,6 @@ export const DEFAULT_CITY = CITIES[0].name;
 export const DEFAULT_SORTING = 'Popular';
 
 export const SORTING_VALUES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;

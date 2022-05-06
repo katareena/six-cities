@@ -40,7 +40,7 @@ export const fetchNearby = (offerId) => (dispatch, _getState, api) => (
 );
 
 export const fetchComments = (offerId) => (dispatch, _getState, api) => (
-  api.get(APIRoute.COMMENTS + offerId) // return promise
+  api.get(APIRoute.COMMENTS + offerId)
     .then(({data}) => {
       const comments = toCamelCase(data);
       return comments;
@@ -48,21 +48,21 @@ export const fetchComments = (offerId) => (dispatch, _getState, api) => (
     .then((comments) => dispatch(ActionCreator.loadComments(comments)))
 );
 
-export const sendComment = ({offerId, comment, rating}) => (dispatch, _getState, api) => {
+export const sendComment = ({offerId, comment, rating}) => (dispatch, _getState, api) =>
   api.post(APIRoute.COMMENTS + offerId, {comment, rating})
     .then(({ status, data }) => {
       if (status !== ResponseCodes.SUCCESS) {
-        dispatch(ActionCreator.postedComment({isPostedComment: false, comment: comment, rating: rating}));
+        dispatch(ActionCreator.postedComment({isPostedComment: false, comment: comment, rating: rating, isErrorPostedComment: true}));
       } else {
         const comments = data.map(toCamelCase);
-        dispatch(ActionCreator.postedComment({isPostedComment: true, comment: comment, rating: rating}));
+        dispatch(ActionCreator.postedComment({isPostedComment: true, comment: comment, rating: rating, isErrorPostedComment: false}));
         dispatch(ActionCreator.loadComments(comments));
       }
     })
     .catch((err) => {
       console.log(`Error: ${err.message}`);
+      dispatch(ActionCreator.postedComment({isPostedComment: false, comment: comment, rating: rating, isErrorPostedComment: true}));
     });
-};
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)

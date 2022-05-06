@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { adoptRating } from '../../../../../utils/adopt-rating';
+import { formatDate } from '../../../../../utils/format-date';
 
 function ReviewItem({avatarUrl, name, rating, date, comment}) {
   return (
@@ -23,7 +24,7 @@ function ReviewItem({avatarUrl, name, rating, date, comment}) {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>{date}</time>
+        <time className="reviews__time" dateTime={formatDate(date)}>{formatDate(date)}</time>
       </div>
     </li>
   );

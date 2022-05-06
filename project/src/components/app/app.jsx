@@ -9,11 +9,11 @@ import LoadingScreen from './loading-screen/loading-screen';
 import SignIn from './sign-in/sign-in';
 import Main from './main/main.jsx';
 import Favorites from './favorites/favorites';
-import NotFoundPage from './not-found/not-found';
+import NotFoundScreen from './not-found-screen/not-found-screen';
 import OfferPage from './offer-page/offer-page';
 import citiesProp from '../prop-types/cities.prop';
 
-function App({cities, isOffersLoaded, authorizationStatus}) {
+function App({cities, isOffersLoaded}) {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -38,7 +38,7 @@ function App({cities, isOffersLoaded, authorizationStatus}) {
         </Route>
 
         <Route>
-          <NotFoundPage />
+          <NotFoundScreen />
         </Route>
 
       </Switch>
@@ -49,12 +49,10 @@ function App({cities, isOffersLoaded, authorizationStatus}) {
 App.propTypes = {
   cities: citiesProp.isRequired,
   isOffersLoaded: PropTypes.bool.isRequired,
-  authorizationStatus: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   isOffersLoaded: state.isOffersLoaded,
-  authorizationStatus: state.authorizationStatus,
 });
 
 export {App};
