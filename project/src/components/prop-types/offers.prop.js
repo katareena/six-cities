@@ -11,12 +11,12 @@ export default PropTypes.arrayOf(
     goods: PropTypes.array,
     host: PropTypes.shape({
       avatarUrl: PropTypes.string,
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       isPro: PropTypes.bool.isRequired,
       name: PropTypes.string.isRequired,
     }),
 
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     images: PropTypes.array,
     isPremium: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,

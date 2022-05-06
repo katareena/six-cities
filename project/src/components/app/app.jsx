@@ -1,37 +1,44 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { AppRout } from './../../constants/common';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
+import { AppRoute } from './../../constants/common';
+import PrivateRoute from './private-route/private-route';
+import browserHistory from '../../browser-history';
+import LoadingScreen from './loading-screen/loading-screen';
 import SignIn from './sign-in/sign-in';
 import Main from './main/main.jsx';
 import Favorites from './favorites/favorites';
-import NotFoundPage from './not-found/not-found';
+import NotFoundScreen from './not-found-screen/not-found-screen';
 import OfferPage from './offer-page/offer-page';
 import citiesProp from '../prop-types/cities.prop';
-import commentsProp from '../prop-types/comments.prop';
-import offersProp from '../prop-types/offers.prop';
 
-function App({offers, cities, comments}) {
+function App({cities, isOffersLoaded}) {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path={AppRout.ROOT} exact>
-          <Main offers={offers} cities={cities}/>
-        </Route>
-
-        <Route path={AppRout.LOGIN} exact>
+        <Route exact path={AppRoute.LOGIN}>
           <SignIn />
         </Route>
 
-        <Route path={AppRout.FAVORITES} exact>
-          <Favorites offers={offers} />
-        </Route>
+        <Route exact path={AppRoute.ROOT} render={(p) => (
+          !isOffersLoaded ? <LoadingScreen /> : <Main {...p} cities={cities}/>
+        )}
+        />
 
-        <Route path={AppRout.OFFER} exact>
-          <OfferPage offers={offers} comments={comments}/>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <Favorites />}
+        >
+        </PrivateRoute>
+
+        <Route exact path={AppRoute.OFFER}>
+          <OfferPage />
         </Route>
 
         <Route>
-          <NotFoundPage />
+          <NotFoundScreen />
         </Route>
 
       </Switch>
@@ -40,9 +47,13 @@ function App({offers, cities, comments}) {
 }
 
 App.propTypes = {
-  offers: offersProp,
   cities: citiesProp.isRequired,
-  comments: commentsProp,
+  isOffersLoaded: PropTypes.bool.isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  isOffersLoaded: state.isOffersLoaded,
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);

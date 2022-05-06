@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import cn from 'classnames';
-import { CardItemClasses } from '../../../../../constants/common';
-
-function adoptRating(rating) {
-  const starsWidth = 73;
-  const starsNumber = 5;
-  return ((starsWidth/starsNumber)*rating);
-}
+import { adoptRating } from '../../../../../utils/adopt-rating';
+import { CardItemClasses, AppRoute, AuthorizationStatus } from '../../../../../constants/common';
 
 function renderPremiumMark(isPremium) {
   if (isPremium) {
@@ -22,14 +18,20 @@ function renderPremiumMark(isPremium) {
   }
 }
 
-function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave}) {
+function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave, authorizationStatus, idActiveCard}) {
   const currentPathname = window.location.pathname.split('/')[1];
+  const history = useHistory();
 
   return (
-    <article className={CardItemClasses[currentPathname]} id={id} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
+    <article
+      className={CardItemClasses[currentPathname]}
+      id={id}
+      onMouseOver={onMouseOver}
+      onMouseLeave={onMouseLeave}
+    >
       {renderPremiumMark(isPremium)}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${id}`}>
+        <Link to={`/offer/${idActiveCard}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -39,7 +41,10 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={cn('place-card__bookmark-button button',{'place-card__bookmark-button--active':isFavorite})} type="button">
+          <button
+            className={cn('place-card__bookmark-button button',{'place-card__bookmark-button--active':isFavorite})} type="button"
+            onClick={() => authorizationStatus === AuthorizationStatus.AUTH || history.push(AppRoute.LOGIN)}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -48,7 +53,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: adoptRating(rating)}}></span>
+            <span style={{width: adoptRating(73, rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -71,7 +76,15 @@ Card.propTypes = {
   type: PropTypes.string.isRequired,
   onMouseOver: PropTypes.func,
   onMouseLeave: PropTypes.func,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  idActiveCard: PropTypes.number,
 };
 
-export default Card;
+const mapStateToProps = ({authorizationStatus, idActiveCard}) => ({
+  authorizationStatus,
+  idActiveCard,
+});
+
+export {Card};
+export default connect(mapStateToProps, null)(Card);

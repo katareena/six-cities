@@ -1,12 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-function adoptRatingHundred(rating) {
-  const starsWidth = 73;
-  const starsNumber = 5;
-  return ((starsWidth/starsNumber)*rating);
-}
+import { adoptRating } from '../../../../../utils/adopt-rating';
 
 function FavoriteItem ({previewImage, price, rating, title, type, id}) {
   return (
@@ -31,7 +26,7 @@ function FavoriteItem ({previewImage, price, rating, title, type, id}) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: adoptRatingHundred(rating)}} />
+            <span style={{width: adoptRating(73, rating)}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
