@@ -2,11 +2,11 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActionCreator } from '../../../store/action';
+import { setActiveUser } from '../../../store/action';
 import { login } from '../../../store/api-actions';
 import Header from '../header/header';
 
-function SignIn ({onSubmit, setActiveUser}) {
+function SignIn ({onSubmit, setActiveUserHandler}) {
   const mailRef = useRef();
   const passwordRef = useRef();
 
@@ -17,7 +17,7 @@ function SignIn ({onSubmit, setActiveUser}) {
     };
 
     onSubmit(userData);
-    setActiveUser(userData.login);
+    setActiveUserHandler(userData.login);
   };
 
   return (
@@ -77,15 +77,15 @@ function SignIn ({onSubmit, setActiveUser}) {
 
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  setActiveUser: PropTypes.func.isRequired,
+  setActiveUserHandler: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
     dispatch(login(authData));
   },
-  setActiveUser(userMail) {
-    dispatch(ActionCreator.setActiveUser(userMail));
+  setActiveUserHandler(userMail) {
+    dispatch(setActiveUser(userMail));
     localStorage.setItem('email', userMail);
   },
 });

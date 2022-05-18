@@ -1,3 +1,5 @@
+import { createAction } from '@reduxjs/toolkit';
+
 export const ActionType = {
   LOAD_OFFERS: 'data/loadOffers',
   LOAD_OFFER_ITEM: 'data/loadOfferItem',
@@ -14,68 +16,52 @@ export const ActionType = {
   POSTED_COMMENT: 'data/postedComment',
 };
 
-export const ActionCreator =  {
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
-  }),
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({
+  payload: offers,
+}));
 
-  loadComments: (comments) => ({
-    type: ActionType.LOAD_COMMENTS,
-    payload: comments,
-  }),
+export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => ({
+  payload: comments,
+}));
 
-  loadOfferItem: (activeOffer) => ({
-    type: ActionType.LOAD_OFFER_ITEM,
-    payload: activeOffer,
-  }),
+export const loadOfferItem = createAction(ActionType.LOAD_OFFER_ITEM, (activeOffer) => ({
+  payload: activeOffer,
+}));
 
-  loadOffersNearby: (offersNearby) => ({
-    type: ActionType.LOAD_OFFERS_NEARBY,
-    payload: offersNearby,
-  }),
+export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (offersNearby) => ({
+  payload: offersNearby,
+}));
 
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
+export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
+  payload: city,
+}));
 
-  clickOnSortMenu: (isOpenSortMenu) => ({
-    type: ActionType.CLICK_ON_SORT_MENU,
-    payload: isOpenSortMenu,
-  }),
+export const clickOnSortMenu = createAction(ActionType.CLICK_ON_SORT_MENU, (isOpenSortMenu) => ({
+  payload: isOpenSortMenu,
+}));
 
-  changeSortingValue: (sortingValue) => ({
-    type: ActionType.CHANGE_SORTING_VALUE,
-    payload: sortingValue,
-  }),
+export const changeSortingValue = createAction(ActionType.CHANGE_SORTING_VALUE, (sortingValue) => ({
+  payload: sortingValue,
+}));
 
-  setIdActiveCard: (id) => ({
-    type: ActionType.SET_ID_ACTIVE_CARD,
-    payload: id,
-  }),
+export const setIdActiveCard = createAction(ActionType.SET_ID_ACTIVE_CARD, (id) => ({
+  payload: id,
+}));
 
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
+  payload: status,
+}));
 
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
+export const signout = createAction(ActionType.LOGOUT);
 
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));
 
-  setActiveUser: (authData) => ({
-    type: ActionType.SET_AUTH_USER,
-    payload: authData,
-  }),
+export const setActiveUser = createAction(ActionType.SET_AUTH_USER, (authData) => ({
+  payload: authData,
+}));
 
-  postedComment: (isPostedComment) => ({
-    type: ActionType.POSTED_COMMENT,
-    payload: isPostedComment,
-  }),
-};
+export const postedComment = createAction(ActionType.POSTED_COMMENT, (isPostedComment) => ({
+  payload: isPostedComment,
+}));

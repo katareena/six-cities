@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AuthorizationStatus, AppRoute } from '../../../constants/common';
-import { ActionCreator } from '../../../store/action';
+import { signout, setActiveUser } from '../../../store/action';
 
-function renderUserMenu(authorizationStatus, logout, authUser, setActiveUser) {
+function renderUserMenu(authorizationStatus, signoutHandler, authUser, setActiveUserHandler) {
   const mail = localStorage.getItem('email');
 
   if (authorizationStatus === AuthorizationStatus.AUTH) {
@@ -24,8 +24,8 @@ function renderUserMenu(authorizationStatus, logout, authUser, setActiveUser) {
             to="/"
             onClick={(evt) => {
               evt.preventDefault();
-              logout();
-              setActiveUser('');
+              signoutHandler();
+              setActiveUserHandler('');
               localStorage.removeItem('mail');
             }}
           >
@@ -52,7 +52,7 @@ function renderUserMenu(authorizationStatus, logout, authUser, setActiveUser) {
   }
 }
 
-function Header({authorizationStatus, logout, authUser, setActiveUser}) {
+function Header({authorizationStatus, authUser, signoutHandler, setActiveUserHandler}) {
   return (
     <header className="header">
       <div className="container">
@@ -63,7 +63,7 @@ function Header({authorizationStatus, logout, authUser, setActiveUser}) {
             </Link>
           </div>
           <nav className="header__nav">
-            {renderUserMenu(authorizationStatus, logout, authUser, setActiveUser)}
+            {renderUserMenu(authorizationStatus, signoutHandler, authUser, setActiveUserHandler)}
           </nav>
         </div>
       </div>
@@ -73,9 +73,9 @@ function Header({authorizationStatus, logout, authUser, setActiveUser}) {
 
 Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  logout: PropTypes.func.isRequired,
   authUser: PropTypes.string,
-  setActiveUser: PropTypes.func.isRequired,
+  signoutHandler: PropTypes.func,
+  setActiveUserHandler: PropTypes.func,
 };
 
 const mapStateToProps = ({authorizationStatus, authUser}) => ({
@@ -84,12 +84,12 @@ const mapStateToProps = ({authorizationStatus, authUser}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logout() {
-    dispatch(ActionCreator.logout());
+  signoutHandler() {
+    dispatch(signout());
   },
 
-  setActiveUser(userMail) {
-    dispatch(ActionCreator.setActiveUser(userMail));
+  setActiveUserHandler(userMail) {
+    dispatch(setActiveUser(userMail));
   },
 });
 

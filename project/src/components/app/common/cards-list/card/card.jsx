@@ -22,6 +22,13 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
   const currentPathname = window.location.pathname.split('/')[1];
   const history = useHistory();
 
+  const handleClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.AUTH) {
+      history.push(AppRoute.LOGIN);
+    }
+    // добавить в избранное
+  };
+
   return (
     <article
       className={CardItemClasses[currentPathname]}
@@ -42,8 +49,9 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={cn('place-card__bookmark-button button',{'place-card__bookmark-button--active':isFavorite})} type="button"
-            onClick={() => authorizationStatus === AuthorizationStatus.AUTH || history.push(AppRoute.LOGIN)}
+            className={cn('place-card__bookmark-button button',{'place-card__bookmark-button--active':isFavorite})}
+            type="button"
+            onClick={handleClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
