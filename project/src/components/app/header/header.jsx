@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AuthorizationStatus, AppRoute } from '../../../constants/common';
 import { signout, setActiveUser } from '../../../store/action';
+import { getAuthorizationStatus, getAuthUser } from '../../../store/user/selectors';
 
 function renderUserMenu(authorizationStatus, signoutHandler, authUser, setActiveUserHandler) {
-  const mail = localStorage.getItem('email');
+  // const mail = localStorage.getItem('email');
 
   if (authorizationStatus === AuthorizationStatus.AUTH) {
     return (
@@ -14,8 +15,9 @@ function renderUserMenu(authorizationStatus, signoutHandler, authUser, setActive
         <li className="header__nav-item user">
           <Link className="header__nav-link header__nav-link--profile" to="/favorites">
             <div className="header__avatar-wrapper user__avatar-wrapper">
+              {authUser.avatarUrl}
             </div>
-            <span className="header__user-name user__name">{mail}</span>
+            <span className="header__user-name user__name">{authUser.email}</span>
           </Link>
         </li>
         <li className="header__nav-item">
@@ -73,14 +75,14 @@ function Header({authorizationStatus, authUser, signoutHandler, setActiveUserHan
 
 Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  authUser: PropTypes.string,
+  authUser: PropTypes.object,
   signoutHandler: PropTypes.func,
   setActiveUserHandler: PropTypes.func,
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
-  authUser: USER.authUser,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  authUser: getAuthUser(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

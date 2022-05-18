@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { fetchOfferItem, fetchNearby, fetchComments } from '../../../store/api-actions';
-
 import Header from '../header/header';
 import ReviewList from './review-list/review-list';
 import MapOffer from './map-offer/map-offer';
@@ -12,6 +11,7 @@ import CardsList from '../common/cards-list/cards-list';
 import LoadingScrin from '../loading-screen/loading-screen';
 import offersProp from '../../prop-types/offers.prop';
 import { adoptRating } from '../../../utils/adopt-rating';
+import { getIsOfferItemLoaded, getOffersNearby, getActiveOffer } from '../../../store/data/selectors';
 
 function renderImage(img) {
   return (
@@ -189,11 +189,11 @@ Offer.propTypes = {
   }),
 };
 
-const mapStateToProps = ({DATA}) => ({
-  activeCity: DATA.activeCity,
-  activeOffer: DATA.activeOffer,
-  offersNearby: DATA.offersNearby,
-  isOfferItemLoaded: DATA.isOfferItemLoaded,
+const mapStateToProps = (state) => ({
+  // activeCity: getActiveCity(state),
+  activeOffer: getActiveOffer(state),
+  offersNearby: getOffersNearby(state),
+  isOfferItemLoaded: getIsOfferItemLoaded(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

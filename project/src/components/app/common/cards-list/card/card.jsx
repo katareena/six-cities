@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import cn from 'classnames';
 import { adoptRating } from '../../../../../utils/adopt-rating';
 import { CardItemClasses, AppRoute, AuthorizationStatus } from '../../../../../constants/common';
+import { getAuthorizationStatus } from '../../../../../store/user/selectors';
+import { getIdActiveCard } from '../../../../../store/data/selectors';
 
 function renderPremiumMark(isPremium) {
   if (isPremium) {
@@ -89,9 +91,9 @@ Card.propTypes = {
   idActiveCard: PropTypes.number,
 };
 
-const mapStateToProps = ({USER, DATA}) => ({
-  authorizationStatus: USER.authorizationStatus,
-  idActiveCard: DATA.idActiveCard,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  idActiveCard: getIdActiveCard(state),
 });
 
 export {Card};

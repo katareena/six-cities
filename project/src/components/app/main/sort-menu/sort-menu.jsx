@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { connect } from 'react-redux';
 import { changeSortingValue, clickOnSortMenu } from '../../../../store/action';
 import { SORTING_VALUES } from '../../../../constants/common';
+import { getActiveSortingValue, getIsOpenSortMenu } from '../../../../store/ui/selectors';
 
 function renderSortingItem(sortingValue, activeSortingValue, clickOnSortMenuHandler, changeSortingValueHandler) {
   return (
@@ -47,9 +48,9 @@ SortMenu.propTypes = {
   changeSortingValueHandler: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({UI}) => ({
-  activeSortingValue: UI.activeSortingValue,
-  isOpenSortMenu: UI.isOpenSortMenu,
+const mapStateToProps = (state) => ({
+  activeSortingValue: getActiveSortingValue(state),
+  isOpenSortMenu: getIsOpenSortMenu(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

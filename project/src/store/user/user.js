@@ -3,7 +3,13 @@ import { AuthorizationStatus } from '../../constants/common';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
-  authUser: '',
+  authUser: {
+    avatarUrl: '',
+    email: '',
+    id: null,
+    isPro: false,
+    name: '',
+  },
 };
 
 const user = (state = initialState, action) => {
@@ -23,7 +29,14 @@ const user = (state = initialState, action) => {
     case ActionType.SET_AUTH_USER:
       return {
         ...state,
-        authUser: action.payload,
+        // authUser: action.payload,
+        authUser: {
+          avatarUrl: action.payload.avatarUrl,
+          email: action.payload.email,
+          id: action.payload.id,
+          isPro: action.payload.isPro,
+          name: action.payload.name,
+        },
       };
 
     default:

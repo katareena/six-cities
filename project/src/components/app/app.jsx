@@ -12,6 +12,7 @@ import Favorites from './favorites/favorites';
 import NotFoundScreen from './not-found-screen/not-found-screen';
 import OfferPage from './offer-page/offer-page';
 import citiesProp from '../prop-types/cities.prop';
+import { getIsOffersLoaded } from '../../store/data/selectors';
 
 function App({cities, isOffersLoaded}) {
   return (
@@ -51,8 +52,8 @@ App.propTypes = {
   isOffersLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  isOffersLoaded: DATA.isOffersLoaded,
+const mapStateToProps = (state) => ({
+  isOffersLoaded: getIsOffersLoaded(state),
 });
 
 export {App};

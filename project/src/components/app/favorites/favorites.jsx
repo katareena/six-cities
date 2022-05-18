@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import offersProp from '../../prop-types/offers.prop.js';
 import Header from '../header/header';
 import FavoriteList from '../favorites/favorites-list/favorites-list';
+import { getOffers } from '../../../store/data/selectors';
 
 function createDictionary(newDictionary, currentArrItem) {
   newDictionary[currentArrItem.city.name] = newDictionary[currentArrItem.city.name] || [];
@@ -53,8 +54,8 @@ Favorites.propTypes = {
   offers: offersProp,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  offers: DATA.offers,
+const mapStateToProps = (state) => ({
+  offers: getOffers(state),
 });
 
 export {Favorites};

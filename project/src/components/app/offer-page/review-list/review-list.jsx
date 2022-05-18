@@ -5,6 +5,8 @@ import ReviewItem from './review-item/review-item';
 import FormComment from './form-comment/form-comment';
 import commentsProp from '../../../prop-types/comments.prop';
 import { AuthorizationStatus } from '../../../../constants/common';
+import { getAuthorizationStatus } from '../../../../store/user/selectors';
+import { getComments } from '../../../../store/data/selectors';
 
 function renderReview({user: {avatarUrl, name}, rating, comment, date, id}) {
   return (
@@ -40,9 +42,9 @@ ReviewList.propTypes = {
   offerId: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({USER, DATA}) => ({
-  comments: DATA.comments,
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  comments: getComments(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

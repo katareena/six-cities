@@ -1,4 +1,4 @@
-import { loadOffers, loadOfferItem, loadOffersNearby, loadComments, postedComment, requireAuthorization, redirectToRoute, signout } from './action.js';
+import { loadOffers, loadOfferItem, loadOffersNearby, loadComments, postedComment, requireAuthorization, redirectToRoute, signout, setActiveUser } from './action.js';
 import { AuthorizationStatus, APIRoute, AppRoute, ResponseCodes} from '../constants/common';
 import { toCamelCase } from '../utils/to-camel-snake-case';
 import {createBrowserHistory} from 'history';
@@ -66,7 +66,11 @@ export const sendComment = ({offerId, comment, rating}) => (dispatch, _getState,
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => {
+      // const user = data.map(toCamelCase);
+      // dispatch(setActiveUser(adaptUserData(data)));
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+    })
     .catch((err) => {
       console.log(`Error: ${err.message}`);
     })
@@ -74,7 +78,12 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
-    .then(({data}) => localStorage.setItem('token', data.token))
+    .then(({data}) => {
+      // const user = data.map(toCamelCase);
+      // dispatch(setActiveUser(user));
+      localStorage.setItem('token', data.token);
+      console.log(data);
+    })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
 );

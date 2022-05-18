@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../../../../constants/common.js';
 import { sendComment } from '../../../../../store/api-actions';
+import { getPostedComment } from '../../../../../store/ui/selectors.js';
 
 function FormComment({offerId, postedComment}) {
   const [rating, setRating] = useState(0);
@@ -110,8 +111,8 @@ FormComment.propTypes = {
   }),
 };
 
-const mapStateToProps = ({UI}) => ({
-  postedComment: UI.postedComment,
+const mapStateToProps = (state) => ({
+  postedComment: getPostedComment(state),
 });
 
 export { FormComment };

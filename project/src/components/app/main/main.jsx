@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; // one of the ways to connect React to the Redux(store)
-
 import Header from '../header/header';
 import CitiesList from './cities-list/cities-list';
 import CardsList from '../common/cards-list/cards-list';
 import Map from '../main/map-main/map-main';
 import SortMenu from './sort-menu/sort-menu';
-
 import citiesProp from '../../prop-types/cities.prop';
 import offersProp from '../../prop-types/offers.prop';
+import { getActiveCity, getActiveSortingValue } from '../../../store/ui/selectors';
+import { getOffers, getIdActiveCard } from '../../../store/data/selectors';
 
 function sortingOffers(activeSortingValue) {
   switch (activeSortingValue) {
@@ -81,11 +81,11 @@ Main.propTypes = {
   idActiveCard: PropTypes.number,
 };
 
-const mapStateToProps = ({UI, DATA}) => ({
-  activeCity: UI.activeCity,
-  offers: DATA.offers,
-  activeSortingValue: UI.activeSortingValue,
-  idActiveCard: DATA.idActiveCard,
+const mapStateToProps = (state) => ({
+  activeCity: getActiveCity(state),
+  offers: getOffers(state),
+  activeSortingValue: getActiveSortingValue(state),
+  idActiveCard: getIdActiveCard(state),
 });
 
 export { Main }; //keep this option for testing
