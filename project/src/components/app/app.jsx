@@ -51,8 +51,8 @@ App.propTypes = {
   isOffersLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  isOffersLoaded: state.isOffersLoaded,
+const mapStateToProps = ({DATA}) => ({
+  isOffersLoaded: DATA.isOffersLoaded,
 });
 
 export {App};

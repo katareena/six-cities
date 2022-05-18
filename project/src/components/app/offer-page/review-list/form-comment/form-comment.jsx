@@ -110,8 +110,8 @@ FormComment.propTypes = {
   }),
 };
 
-const mapStateToProps = ({postedComment}) => ({
-  postedComment,
+const mapStateToProps = ({UI}) => ({
+  postedComment: UI.postedComment,
 });
 
 export { FormComment };

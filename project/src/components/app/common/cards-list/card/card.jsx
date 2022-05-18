@@ -89,9 +89,9 @@ Card.propTypes = {
   idActiveCard: PropTypes.number,
 };
 
-const mapStateToProps = ({authorizationStatus, idActiveCard}) => ({
-  authorizationStatus,
-  idActiveCard,
+const mapStateToProps = ({USER, DATA}) => ({
+  authorizationStatus: USER.authorizationStatus,
+  idActiveCard: DATA.idActiveCard,
 });
 
 export {Card};

@@ -47,9 +47,9 @@ SortMenu.propTypes = {
   changeSortingValueHandler: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({activeSortingValue, isOpenSortMenu}) => ({
-  activeSortingValue,
-  isOpenSortMenu,
+const mapStateToProps = ({UI}) => ({
+  activeSortingValue: UI.activeSortingValue,
+  isOpenSortMenu: UI.isOpenSortMenu,
 });
 
 const mapDispatchToProps = (dispatch) => ({

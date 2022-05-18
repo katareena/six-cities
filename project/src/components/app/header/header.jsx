@@ -78,9 +78,9 @@ Header.propTypes = {
   setActiveUserHandler: PropTypes.func,
 };
 
-const mapStateToProps = ({authorizationStatus, authUser}) => ({
-  authorizationStatus,
-  authUser,
+const mapStateToProps = ({USER}) => ({
+  authorizationStatus: USER.authorizationStatus,
+  authUser: USER.authUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -40,9 +40,9 @@ ReviewList.propTypes = {
   offerId: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({comments, authorizationStatus}) => ({
-  comments,
-  authorizationStatus,
+const mapStateToProps = ({USER, DATA}) => ({
+  comments: DATA.comments,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

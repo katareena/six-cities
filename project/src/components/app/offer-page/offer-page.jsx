@@ -189,11 +189,11 @@ Offer.propTypes = {
   }),
 };
 
-const mapStateToProps = ({activeCity, activeOffer, offersNearby, isOfferItemLoaded}) => ({
-  activeCity,
-  activeOffer,
-  offersNearby,
-  isOfferItemLoaded,
+const mapStateToProps = ({DATA}) => ({
+  activeCity: DATA.activeCity,
+  activeOffer: DATA.activeOffer,
+  offersNearby: DATA.offersNearby,
+  isOfferItemLoaded: DATA.isOfferItemLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({

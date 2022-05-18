@@ -81,11 +81,11 @@ Main.propTypes = {
   idActiveCard: PropTypes.number,
 };
 
-const mapStateToProps = ({activeCity, offers, activeSortingValue, idActiveCard}) => ({
-  activeCity,
-  offers,
-  activeSortingValue,
-  idActiveCard,
+const mapStateToProps = ({UI, DATA}) => ({
+  activeCity: UI.activeCity,
+  offers: DATA.offers,
+  activeSortingValue: UI.activeSortingValue,
+  idActiveCard: DATA.idActiveCard,
 });
 
 export { Main }; //keep this option for testing
