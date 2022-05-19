@@ -66,9 +66,9 @@ export const sendComment = ({offerId, comment, rating}) => (dispatch, _getState,
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => {
-      // const user = data.map(toCamelCase);
-      // dispatch(setActiveUser(adaptUserData(data)));
+    .then(({data}) => {
+      const user = toCamelCase(data);
+      dispatch(setActiveUser(user));
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
     })
     .catch((err) => {
@@ -79,10 +79,9 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => {
-      // const user = data.map(toCamelCase);
-      // dispatch(setActiveUser(user));
+      const user = toCamelCase(data);
+      dispatch(setActiveUser(user));
       localStorage.setItem('token', data.token);
-      console.log(data);
     })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))

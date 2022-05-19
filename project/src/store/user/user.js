@@ -29,7 +29,6 @@ const user = (state = initialState, action) => {
     case ActionType.SET_AUTH_USER:
       return {
         ...state,
-        // authUser: action.payload,
         authUser: {
           avatarUrl: action.payload.avatarUrl,
           email: action.payload.email,

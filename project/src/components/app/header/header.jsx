@@ -7,15 +7,13 @@ import { signout, setActiveUser } from '../../../store/action';
 import { getAuthorizationStatus, getAuthUser } from '../../../store/user/selectors';
 
 function renderUserMenu(authorizationStatus, signoutHandler, authUser, setActiveUserHandler) {
-  // const mail = localStorage.getItem('email');
-
   if (authorizationStatus === AuthorizationStatus.AUTH) {
     return (
       <ul className="header__nav-list">
         <li className="header__nav-item user">
           <Link className="header__nav-link header__nav-link--profile" to="/favorites">
             <div className="header__avatar-wrapper user__avatar-wrapper">
-              {authUser.avatarUrl}
+              <img src={authUser.avatarUrl} alt={'User avatar'} style={{borderRadius: '50%'}}/>
             </div>
             <span className="header__user-name user__name">{authUser.email}</span>
           </Link>
