@@ -25,7 +25,6 @@ function Main() {
         />
         <div className="cities">
           <div className="cities__places-container container">
-            {/* replace with cities__no-places */}
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in {activeCity}</b>
@@ -45,7 +44,6 @@ function Main() {
                 activeCard={idActiveCard}
               />
             </div>
-
           </div>
         </div>
       </main>

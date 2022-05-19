@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getOffers } from '../../../store/data/selectors';
 import Header from '../header/header';
 import FavoriteList from '../favorites/favorites-list/favorites-list';
+import { getOffers } from '../../../store/data/selectors';
 
 function createDictionary(newDictionary, currentArrItem) {
   newDictionary[currentArrItem.city.name] = newDictionary[currentArrItem.city.name] || [];
