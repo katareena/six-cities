@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { requireAuthorization, setActiveUser, signout } from '../action';
+import { requireAuthorization, setActiveUser, signOut } from '../action';
 import { AuthorizationStatus } from '../../constants/common';
 
 const initialState = {
@@ -27,7 +27,7 @@ const user = createReducer(initialState, (builder) => {
         name: action.payload.name,
       };
     })
-    .addCase(signout, (state) => {
+    .addCase(signOut, (state) => {
       state.authorizationStatus = AuthorizationStatus.NO_AUTH;
       state.authUser = {
         avatarUrl: '',

@@ -72,4 +72,4 @@ export const setActiveUser = createAction(ActionType.SET_AUTH_USER, (authData) =
   payload: authData,
 }));
 
-export const signout = createAction(ActionType.LOGOUT);
+export const signOut = createAction(ActionType.LOGOUT);

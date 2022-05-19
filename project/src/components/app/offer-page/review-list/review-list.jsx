@@ -1,12 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ReviewItem from './review-item/review-item';
-import FormComment from './form-comment/form-comment';
-import commentsProp from '../../../prop-types/comments.prop';
-import { AuthorizationStatus } from '../../../../constants/common';
+import { useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../../../store/user/selectors';
 import { getComments } from '../../../../store/data/selectors';
+import ReviewItem from './review-item/review-item';
+import FormComment from './form-comment/form-comment';
+import { AuthorizationStatus } from '../../../../constants/common';
+
 
 function renderReview({user: {avatarUrl, name}, rating, comment, date, id}) {
   return (
@@ -22,7 +22,9 @@ function renderReview({user: {avatarUrl, name}, rating, comment, date, id}) {
   );
 }
 
-function ReviewList({comments, authorizationStatus, offerId}) {
+function ReviewList({offerId}) {
+  const comments = useSelector(getComments);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const Reviews = comments.map((comment) => renderReview(comment));
 
   return (
@@ -37,19 +39,7 @@ function ReviewList({comments, authorizationStatus, offerId}) {
 }
 
 ReviewList.propTypes = {
-  comments: commentsProp,
-  authorizationStatus: PropTypes.string.isRequired,
   offerId: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  comments: getComments(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-
-});
-
-export { ReviewList };
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewList);
+export default ReviewList;

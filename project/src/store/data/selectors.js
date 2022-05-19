@@ -1,6 +1,7 @@
-import { NameSpace } from '../root-reducer';
-import { getActiveCity } from '../ui/selectors';
 import { createSelector } from 'reselect';
+import { NameSpace } from '../root-reducer';
+import { getActiveCity, getActiveSortingValue } from '../ui/selectors';
+import { sortingOffers } from '../../utils/sorting-offers';
 
 export const getOffers = (state) => state[NameSpace.DATA].offers;
 export const getUsers = (state) => state[NameSpace.DATA].users;
@@ -15,8 +16,8 @@ export const getIsOffersNearbyLoaded = (state) => state[NameSpace.DATA].isOffers
 // export const getIsFavoriteOffersLoaded = (state) => state[NameSpace.DATA].isFavoriteOffersLoaded;
 // export const getFavoriteOffers = (state) => state[NameSpace.DATA].favoriteOffers;
 
-export const getCurrentOffers = createSelector(
-  [getOffers, getActiveCity],
-  (offers, city) => offers.filter((offer) => offer.city.name === city),
+export const getActualOffers = createSelector(
+  [getOffers, getActiveCity, getActiveSortingValue],
+  (offers, city, sortingValue) => offers.filter((offer) => offer.city.name === city).sort(sortingOffers(sortingValue)),
 );
 

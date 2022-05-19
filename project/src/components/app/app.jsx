@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
 import { AppRoute } from './../../constants/common';
 import PrivateRoute from './private-route/private-route';
@@ -11,10 +10,11 @@ import Main from './main/main.jsx';
 import Favorites from './favorites/favorites';
 import NotFoundScreen from './not-found-screen/not-found-screen';
 import OfferPage from './offer-page/offer-page';
-import citiesProp from '../prop-types/cities.prop';
 import { getIsOffersLoaded } from '../../store/data/selectors';
 
-function App({cities, isOffersLoaded}) {
+function App() {
+  const isOffersLoaded = useSelector(getIsOffersLoaded);
+
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -23,7 +23,7 @@ function App({cities, isOffersLoaded}) {
         </Route>
 
         <Route exact path={AppRoute.ROOT} render={(p) => (
-          !isOffersLoaded ? <LoadingScreen /> : <Main {...p} cities={cities}/>
+          !isOffersLoaded ? <LoadingScreen /> : <Main {...p} />
         )}
         />
 
@@ -47,14 +47,4 @@ function App({cities, isOffersLoaded}) {
   );
 }
 
-App.propTypes = {
-  cities: citiesProp.isRequired,
-  isOffersLoaded: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isOffersLoaded: getIsOffersLoaded(state),
-});
-
-export {App};
-export default connect(mapStateToProps, null)(App);
+export default App;

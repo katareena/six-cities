@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
 import cn from 'classnames';
 import { adoptRating } from '../../../../../utils/adopt-rating';
 import { CardItemClasses, AppRoute, AuthorizationStatus } from '../../../../../constants/common';
+
 import { getAuthorizationStatus } from '../../../../../store/user/selectors';
 import { getIdActiveCard } from '../../../../../store/data/selectors';
 
@@ -20,9 +21,12 @@ function renderPremiumMark(isPremium) {
   }
 }
 
-function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave, authorizationStatus, idActiveCard}) {
+function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave}) {
   const currentPathname = window.location.pathname.split('/')[1];
   const history = useHistory();
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const idActiveCard = useSelector(getIdActiveCard);
 
   const handleClick = () => {
     if (authorizationStatus !== AuthorizationStatus.AUTH) {
@@ -35,8 +39,8 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
     <article
       className={CardItemClasses[currentPathname]}
       id={id}
-      onMouseOver={onMouseOver}
-      onMouseLeave={onMouseLeave}
+      onMouseOver = {onMouseOver}
+      onMouseLeave = {onMouseLeave}
     >
       {renderPremiumMark(isPremium)}
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -77,6 +81,9 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
 }
 
 Card.propTypes = {
+  onMouseOver: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  id: PropTypes.number.isRequired,
   isPremium: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   previewImage: PropTypes.string.isRequired,
@@ -84,17 +91,6 @@ Card.propTypes = {
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  onMouseOver: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  id: PropTypes.number.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  idActiveCard: PropTypes.number,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-  idActiveCard: getIdActiveCard(state),
-});
-
-export {Card};
-export default connect(mapStateToProps, null)(Card);
+export default Card;

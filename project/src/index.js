@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import rootReducer from './store/root-reducer';
 import { requireAuthorization } from './store/action';
 import { fetchOffersList, checkAuth } from './store/api-actions';
-import { CITIES, AuthorizationStatus } from './constants/common';
+import { AuthorizationStatus } from './constants/common';
 import App from './components/app/app';
 
 const api = createAPI(
@@ -30,7 +30,7 @@ store.dispatch(fetchOffersList());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App cities={CITIES}/>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

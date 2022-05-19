@@ -1,27 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setIdActiveCard } from '../../../../store/action';
+
 import Card from './card/card';
 import offersProp from '../../../prop-types/offers.prop';
-
 import { CardListClasses } from '../../../../constants/common';
 
-function renderCard({id, ...rest}, setIdActiveCardHandler) {
+function renderCard({id, ...rest}, dispatch) {
   return (
     <Card
       {...rest}
       id={id}
       key={id}
 
-      onMouseOver = {() => setIdActiveCardHandler(id)}
-      onMouseLeave = {() => setIdActiveCardHandler(0)}
+      onMouseOver = {() => dispatch(setIdActiveCard(id))}
+      onMouseLeave = {() => dispatch(setIdActiveCard(0))}
     />
   );
 }
 
-function CardsList({offers, setIdActiveCardHandler}) {
-  const Cards = offers.map((key) => renderCard(key, setIdActiveCardHandler));
+function CardsList({offers}) {
+  const dispatch = useDispatch();
+  const Cards = offers.map((key) => renderCard(key, dispatch));
   const currentPathname = window.location.pathname.split('/')[1];
 
   return (
@@ -33,14 +35,6 @@ function CardsList({offers, setIdActiveCardHandler}) {
 
 CardsList.propTypes = {
   offers: offersProp.isRequired,
-  setIdActiveCardHandler: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setIdActiveCardHandler(id) {
-    dispatch(setIdActiveCard(id));
-  },
-});
-
-export { CardsList };
-export default connect(null, mapDispatchToProps)(CardsList);
+export default CardsList;

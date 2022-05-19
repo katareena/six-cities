@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import offersProp from '../../prop-types/offers.prop.js';
+import { useSelector } from 'react-redux';
+import { getOffers } from '../../../store/data/selectors';
 import Header from '../header/header';
 import FavoriteList from '../favorites/favorites-list/favorites-list';
-import { getOffers } from '../../../store/data/selectors';
 
 function createDictionary(newDictionary, currentArrItem) {
   newDictionary[currentArrItem.city.name] = newDictionary[currentArrItem.city.name] || [];
@@ -23,7 +22,8 @@ function renderFavoriteLists(data) {
   ));
 }
 
-function Favorites ({offers}) {
+function Favorites () {
+  const offers = useSelector(getOffers);
   const favoriteoffers = offers.filter(({isFavorite}) => isFavorite);
   const favoriteoffersByCity = favoriteoffers.reduce(createDictionary, Object.create(null));
   const FavoriteLists = renderFavoriteLists(favoriteoffersByCity);
@@ -50,13 +50,4 @@ function Favorites ({offers}) {
   );
 }
 
-Favorites.propTypes = {
-  offers: offersProp,
-};
-
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
-});
-
-export {Favorites};
-export default connect(mapStateToProps, null)(Favorites);
+export default Favorites;

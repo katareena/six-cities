@@ -1,7 +1,7 @@
-import { loadOffers, loadOfferItem, loadOffersNearby, loadComments, postedComment, requireAuthorization, redirectToRoute, signout, setActiveUser } from './action.js';
+import { loadOffers, loadOfferItem, loadOffersNearby, loadComments, postedComment, requireAuthorization, redirectToRoute, signOut, setActiveUser } from './action.js';
 import { AuthorizationStatus, APIRoute, AppRoute, ResponseCodes} from '../constants/common';
 import { toCamelCase } from '../utils/to-camel-snake-case';
-import {createBrowserHistory} from 'history';
+import { createBrowserHistory } from 'history';
 
 const browserHistory = createBrowserHistory();
 
@@ -90,5 +90,5 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(signout()))
+    .then(() => dispatch(signOut()))
 );
