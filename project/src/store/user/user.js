@@ -1,4 +1,5 @@
-import { ActionType } from '../action';
+import { createReducer } from '@reduxjs/toolkit';
+import { requireAuthorization, setActiveUser, signout } from '../action';
 import { AuthorizationStatus } from '../../constants/common';
 
 const initialState = {
@@ -12,35 +13,30 @@ const initialState = {
   },
 };
 
-const user = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.REQUIRED_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
+const user = createReducer(initialState, (builder) => {
+  builder
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setActiveUser, (state, action) => {
+      state.authUser = {
+        avatarUrl: action.payload.avatarUrl,
+        email: action.payload.email,
+        id: action.payload.id,
+        isPro: action.payload.isPro,
+        name: action.payload.name,
       };
-
-    case ActionType.LOGOUT:
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
+    })
+    .addCase(signout, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NO_AUTH;
+      state.authUser = {
+        avatarUrl: '',
+        email: '',
+        id: null,
+        isPro: false,
+        name: '',
       };
-
-    case ActionType.SET_AUTH_USER:
-      return {
-        ...state,
-        authUser: {
-          avatarUrl: action.payload.avatarUrl,
-          email: action.payload.email,
-          id: action.payload.id,
-          isPro: action.payload.isPro,
-          name: action.payload.name,
-        },
-      };
-
-    default:
-      return state;
-  }
-};
+    });
+});
 
 export { user };

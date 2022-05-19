@@ -1,11 +1,11 @@
-import { ActionType } from '../action';
+import { createReducer } from '@reduxjs/toolkit';
+import { loadOffers, loadComments, loadOfferItem, loadOffersNearby, setIdActiveCard, redirectToRoute } from '../action';
 
 const initialState = {
   offers: [],
-  users: [],
   comments: [],
-  offersNearby: [],
   activeOffer: null,
+  offersNearby: [],
   idActiveCard: 0,
   isOffersLoaded: false,
   isOfferItemLoaded: false,
@@ -14,51 +14,31 @@ const initialState = {
   url: '',
 };
 
-const data = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.LOAD_OFFERS:
-      return {
-        ...state,
-        offers: action.payload,
-        isOffersLoaded: true,
-      };
+const data = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+      state.isOffersLoaded = true;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+      state.isCommentsLoaded = true;
+    })
+    .addCase(loadOfferItem, (state, action) => {
+      state.activeOffer = action.payload;
+      state.isOfferItemLoaded = true;
+    })
+    .addCase(loadOffersNearby, (state, action) => {
+      state.offersNearby = action.payload;
+      state.isOffersNearbyLoaded = true;
+    })
+    .addCase(setIdActiveCard, (state, action) => {
+      state.idActiveCard = action.payload;
+    })
+    .addCase(redirectToRoute, (state, action) => {
+      state.url = action.payload;
+    });
 
-    case ActionType.LOAD_COMMENTS:
-      return {
-        ...state,
-        comments: action.payload,
-        isCommentsLoaded: true,
-      };
-
-    case ActionType.LOAD_OFFER_ITEM:
-      return {
-        ...state,
-        activeOffer: action.payload,
-        isOfferItemLoaded: true,
-      };
-
-    case ActionType.LOAD_OFFERS_NEARBY:
-      return {
-        ...state,
-        offersNearby: action.payload,
-        isOffersNearbyLoaded: true,
-      };
-
-    case ActionType.SET_ID_ACTIVE_CARD:
-      return {
-        ...state,
-        idActiveCard: action.payload,
-      };
-
-    case ActionType.REDIRECT_TO_ROUTE:
-      return {
-        ...state,
-        url: action.payload,
-      };
-
-    default:
-      return state;
-  }
-};
+});
 
 export { data };
