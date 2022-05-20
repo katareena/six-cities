@@ -8,8 +8,8 @@ import ReviewList from './review-list/review-list';
 import MapOffer from './map-offer/map-offer';
 import CardsList from '../common/cards-list/cards-list';
 import LoadingScrin from '../loading-screen/loading-screen';
+import FavoritesButton from '../common/favorite-button/favorite-button';
 import { adoptRating } from '../../../utils/adopt-rating';
-import cn from 'classnames';
 
 function renderImage(img) {
   return (
@@ -80,14 +80,9 @@ function Offer () {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button
-                  className={cn('property__bookmark-button button',{'property__bookmark-button--active':isFavorite})} type="button"
-                >
-                  <svg className="property__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+
+                <FavoritesButton offerId={id} isFavorite={isFavorite}/>
+
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

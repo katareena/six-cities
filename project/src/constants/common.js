@@ -15,6 +15,24 @@ export const CardItemClasses = {
   'offer': 'near-places__card place-card',
 };
 
+export const ButtonType = {
+  '': 'main_card',
+  'offer': 'offer_page_card',
+};
+
+export const FavoritesButtonSetting = {
+  'main_card': {
+    CLASS: 'place-card',
+    WIDTH: 18,
+    HEIGHT: 19,
+  },
+  'offer_page_card': {
+    CLASS: 'property',
+    WIDTH: 31,
+    HEIGHT: 33,
+  },
+};
+
 export const AppRoute = {
   ROOT: '/',
   LOGIN: '/login',
@@ -30,6 +48,7 @@ export const APIRoute = {
   LOGOUT: '/logout',
   ROOM: '/hotels/',
   COMMENTS: '/comments/',
+  FAVORITES: '/favorite',
 };
 
 export const ResponseCodes = {

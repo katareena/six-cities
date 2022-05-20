@@ -6,6 +6,8 @@ export const ActionType = {
   LOAD_OFFER_ITEM: 'data/loadOfferItem',
   LOAD_COMMENTS: 'data/loadComments',
   LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
+  LOAD_FAVORITE_OFFERS: 'data/loadFavoriteOffers',
+  UPDATE_OFFER: 'data/updateOffer',
   SET_ID_ACTIVE_CARD: 'main/setIdActiveCard',
   REDIRECT_TO_ROUTE: 'main/redirectToRoute',
 
@@ -36,6 +38,14 @@ export const loadOfferItem = createAction(ActionType.LOAD_OFFER_ITEM, (activeOff
 
 export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (offersNearby) => ({
   payload: offersNearby,
+}));
+
+export const loadFavoriteOffers = createAction(ActionType.LOAD_FAVORITE_OFFERS, (favoriteOffers) => ({
+  payload: favoriteOffers,
+}));
+
+export const updateOffer = createAction(ActionType.UPDATE_OFFER, (offer) => ({
+  payload: offer,
 }));
 
 export const setIdActiveCard = createAction(ActionType.SET_ID_ACTIVE_CARD, (id) => ({

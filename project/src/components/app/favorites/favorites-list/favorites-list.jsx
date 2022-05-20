@@ -1,45 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { getOffers } from '../../../../store/data/selectors';
+import FavoriteItem from './favorites-item/favorites-item';
 
-import FavoriteItem from './favorites-item/favorites-item.jsx';
+function createDictionary(newDictionary, currentArrItem) {
+  newDictionary[currentArrItem.city.name] = newDictionary[currentArrItem.city.name] || [];
+  newDictionary[currentArrItem.city.name].push(currentArrItem);
 
-function renderFavoriteItem({previewImage, price, rating, title, type, id}) {
-  return (
+  return newDictionary;
+}
+
+function renderFavoriteLists(data) {
+  return Object.keys(data).map((key) => (
     <FavoriteItem
-      previewImage={previewImage}
-      price={price}
-      rating={rating}
-      title={title}
-      type={type}
-      key={id}
-      id={id}
+      city={key}
+      datasCity={data[key]}
+      key={key}
     />
-  );
+  ));
 }
 
-function FavoriteList ({city, datasCity}) {
-  const favoriteItems = datasCity.map((data) => renderFavoriteItem(data));
+function FavoriteList() {
+  const offers = useSelector(getOffers);
+  const favoriteOffers = offers.filter(({isFavorite}) => isFavorite);
+  const favoriteoffersByCity = favoriteOffers.reduce(createDictionary, Object.create(null));
+  const FavoriteLists = renderFavoriteLists(favoriteoffersByCity);
+
   return (
-    <li className="favorites__locations-items">
-      <div className="favorites__locations locations locations--current">
-        <div className="locations__item">
-          <a className="locations__item-link" href="https://ru.reactjs.org">
-            <span>{city}</span>
-          </a>
-        </div>
-      </div>
-      <div className="favorites__places">
-
-        {favoriteItems}
-
-      </div>
-    </li>
+    <section className="favorites">
+      <h1 className="favorites__title">Saved listing</h1>
+      <ul className="favorites__list">
+        {FavoriteLists}
+      </ul>
+    </section>
   );
 }
-
-FavoriteList.propTypes = {
-  city: PropTypes.string.isRequired,
-  datasCity: PropTypes.array.isRequired,
-};
 
 export default FavoriteList;

@@ -1,4 +1,4 @@
-import { loadOffers, loadOfferItem, loadOffersNearby, loadComments, postedComment, requireAuthorization, redirectToRoute, signOut, setActiveUser } from './action.js';
+import { loadOffers, loadOfferItem, loadOffersNearby, loadComments, loadFavoriteOffers, updateOffer, postedComment, requireAuthorization, redirectToRoute, signOut, setActiveUser } from './action.js';
 import { AuthorizationStatus, APIRoute, AppRoute, ResponseCodes} from '../constants/common';
 import { toCamelCase } from '../utils/to-camel-snake-case';
 import { createBrowserHistory } from 'history';
@@ -92,3 +92,19 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(signOut()))
 );
+
+export const fetchFavoriteOffersList = () => (dispatch, _getState, api) => {
+  api.get(APIRoute.FAVORITES)
+    .then(({data}) => {
+      const favoriteOffers = toCamelCase(data);
+      return favoriteOffers;
+    })
+    .then((favoriteOffers) => dispatch(loadFavoriteOffers(favoriteOffers)))
+    .catch(() => dispatch(loadFavoriteOffers([])));
+};
+
+export const addOfferToFavorites = ({offerId, status}) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.FAVORITES}/${offerId}/${status}`)
+    .then(({data}) => dispatch(updateOffer(data)))
+    .catch(() => {});
+};
