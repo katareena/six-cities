@@ -64,14 +64,8 @@ function Offer () {
   const createGallery = images.slice(0, 6).map((img) => renderImage(img));
   const createGoods = goods.map((good) => renderGoodsItem(good));
 
-  const myRef = React.createRef();
-  function scrollToMyRef() {
-    console.log(1);
-    return window.scrollTo(0, myRef.current.scrollHeight);
-  }
-
   return (
-    <div className="page" ref={myRef}>
+    <div className="page">
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
@@ -153,7 +147,6 @@ function Offer () {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardsList
               offers={offersNearby}
-              onClick={scrollToMyRef}
             />
           </section>
         </div>

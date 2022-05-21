@@ -19,7 +19,7 @@ function renderPremiumMark(isPremium) {
   }
 }
 
-function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave, onClick}) {
+function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave}) {
   const currentPathname = window.location.pathname.split('/')[1];
   const idActiveCard = useSelector(getIdActiveCard);
 
@@ -32,7 +32,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
     >
       {renderPremiumMark(isPremium)}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${idActiveCard}`} onClick={() => onClick()}>
+        <Link to={`/offer/${idActiveCard}`} onClick={() => window.scrollTo(0, 0)}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -53,7 +53,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{title}</Link>
+          <Link to={`/offer/${id}`} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -64,7 +64,6 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
 Card.propTypes = {
   onMouseOver: PropTypes.func,
   onMouseLeave: PropTypes.func,
-  onClick: PropTypes.func,
   id: PropTypes.number.isRequired,
   isPremium: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
