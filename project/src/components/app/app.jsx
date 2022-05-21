@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
-import { AppRoute } from './../../constants/common';
+import { AppRoute, AuthorizationStatus } from './../../constants/common';
 import PrivateRoute from './private-route/private-route';
 import browserHistory from '../../browser-history';
 import SignIn from './sign-in/sign-in';
@@ -33,11 +33,21 @@ function App() {
     <BrowserRouter history={browserHistory}>
       <Switch>
 
-        <Route exact path={AppRoute.LOGIN} render={() => <SignIn />} />
+        <Route exact path={AppRoute.LOGIN}>
+          <PrivateRoute exact path={AppRoute.LOGIN}
+            allowedStatus={AuthorizationStatus.NO_AUTH}
+            redirect={AppRoute.ROOT}
+            render={() => <SignIn/>}
+          />
+        </Route>
+
+        <PrivateRoute exact path={AppRoute.FAVORITES}
+          allowedStatus={AuthorizationStatus.AUTH}
+          redirect={AppRoute.LOGIN}
+          render={() => <Favorites/>}
+        />
 
         <Route exact path={AppRoute.ROOT} render={() => renderMain(offers, isOffersLoaded)}/>
-
-        <PrivateRoute exact path={AppRoute.FAVORITES} render={() => <Favorites />} />
 
         <Route exact path={AppRoute.OFFER} render={() => <OfferPage />} />
 

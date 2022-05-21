@@ -39,7 +39,7 @@ function ReviewList({offerId}) {
 }
 
 ReviewList.propTypes = {
-  offerId: PropTypes.string.isRequired,
+  offerId: PropTypes.number.isRequired,
 };
 
 export default ReviewList;

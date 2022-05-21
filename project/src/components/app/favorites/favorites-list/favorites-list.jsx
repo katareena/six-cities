@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getOffers } from '../../../../store/data/selectors';
+import { getFavoriteOffers } from '../../../../store/data/selectors';
 import FavoriteItem from './favorites-item/favorites-item';
 
 function createDictionary(newDictionary, currentArrItem) {
@@ -21,8 +21,7 @@ function renderFavoriteLists(data) {
 }
 
 function FavoriteList() {
-  const offers = useSelector(getOffers);
-  const favoriteOffers = offers.filter(({isFavorite}) => isFavorite);
+  const favoriteOffers = useSelector(getFavoriteOffers);
   const favoriteoffersByCity = favoriteOffers.reduce(createDictionary, Object.create(null));
   const FavoriteLists = renderFavoriteLists(favoriteoffersByCity);
 

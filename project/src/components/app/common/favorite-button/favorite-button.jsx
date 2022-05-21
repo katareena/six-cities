@@ -4,25 +4,16 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addOfferToFavorites } from '../../../../store/api-actions';
 import { getAuthorizationStatus } from '../../../../store/user/selectors';
-import { getIsFavoriteOffersLoaded } from '../../../../store/data/selectors';
-import { AppRoute, AuthorizationStatus, ButtonType, FavoritesButtonSetting } from '../../../../constants/common';
+import { AppRoute, AuthorizationStatus, FavoritesButtonSetting } from '../../../../constants/common';
 
-function FavoritesButton({ offerId, isFavorite}) {
-  const currentPathname = window.location.pathname.split('/')[1];
-  const buttonType = ButtonType[currentPathname];
+function FavoritesButton({ offerId, isFavorite, buttonType}) {
   const history = useHistory();
-
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const isFavoriteOffersLoaded = useSelector(getIsFavoriteOffersLoaded);
   const dispatch = useDispatch();
 
   const handleClick = () => {
     if (authorizationStatus !== AuthorizationStatus.AUTH) {
       history.push(AppRoute.LOGIN);
-    }
-
-    if (!isFavoriteOffersLoaded) {
-      return;
     }
 
     dispatch(addOfferToFavorites({offerId, status: Number(!isFavorite)}));
@@ -43,8 +34,9 @@ function FavoritesButton({ offerId, isFavorite}) {
 }
 
 FavoritesButton.propTypes = {
-  offerId: PropTypes.string.isRequired,
+  offerId: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired,
+  buttonType: PropTypes.string.isRequired,
 };
 
 export default FavoritesButton;

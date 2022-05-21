@@ -1,5 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { loadOffers, loadComments, loadOfferItem, loadOffersNearby, loadFavoriteOffers, updateOffer, setIdActiveCard, redirectToRoute } from '../action';
+import { toCamelCase } from '../../utils/to-camel-snake-case';
+import { removeFromFavoriteOffers, updateOffers, updateActiveOffer } from '../../utils/update-favorite-offers';
 
 const initialState = {
   offers: [],
@@ -20,31 +22,6 @@ const initialState = {
   idActiveCard: 0,
 
   url: '',
-};
-
-export const removeFromFavoriteOffers = (offers, offerToRemove) => {
-  const {id} = offerToRemove;
-  const index = offers.findIndex((item) => item.id === id);
-  if (index !== -1) {
-    offers.splice(index, 1);
-  }
-  return offers;
-};
-
-export const updateOffers = (offers, updatedOffer) => {
-  const { id } = updatedOffer;
-  const index = offers.findIndex((item) => item.id === id);
-  if (index !== -1) {
-    offers[index].isFavorite = updatedOffer.isFavorite;
-  }
-  return offers;
-};
-
-export const updateActiveOffer = (activeOffer, updatedOffer) => {
-  if (activeOffer && activeOffer.id === updatedOffer.id) {
-    activeOffer.isFavorite = updatedOffer.isFavorite;
-  }
-  return activeOffer;
 };
 
 const data = createReducer(initialState, (builder) => {
@@ -70,10 +47,12 @@ const data = createReducer(initialState, (builder) => {
       state.isFavoriteOffersLoaded = true;
     })
     .addCase(updateOffer, (state, action) => {
-      state.offers = updateOffers(state.offers, action.payload);
-      state.offersNearby = updateOffers(state.offersNearby, action.payload);
-      state.activeOffer = updateActiveOffer(state.activeOffer, action.payload);
-      state.favoriteOffers = removeFromFavoriteOffers(state.favoriteOffers, action.payload);
+      const actionPayload = toCamelCase(action.payload);
+      state.offers = updateOffers(state.offers, actionPayload);
+      state.offersNearby = updateOffers(state.offersNearby, actionPayload);
+      state.activeOffer = updateActiveOffer(state.activeOffer, actionPayload);
+      state.favoriteOffers = removeFromFavoriteOffers(state.favoriteOffers, actionPayload);
+
     })
     .addCase(setIdActiveCard, (state, action) => {
       state.idActiveCard = action.payload;
@@ -81,7 +60,6 @@ const data = createReducer(initialState, (builder) => {
     .addCase(redirectToRoute, (state, action) => {
       state.url = action.payload;
     });
-
 });
 
 export { data };

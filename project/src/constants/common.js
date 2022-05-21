@@ -16,17 +16,17 @@ export const CardItemClasses = {
 };
 
 export const ButtonType = {
-  '': 'main_card',
-  'offer': 'offer_page_card',
+  OFFERS_LIST_CARD: 'OFFERS_LIST_CARD',
+  OFFER_PAGE_CARD: 'OFFER_PAGE_CARD',
 };
 
 export const FavoritesButtonSetting = {
-  'main_card': {
+  'OFFERS_LIST_CARD': {
     CLASS: 'place-card',
     WIDTH: 18,
     HEIGHT: 19,
   },
-  'offer_page_card': {
+  'OFFER_PAGE_CARD': {
     CLASS: 'property',
     WIDTH: 31,
     HEIGHT: 33,
@@ -63,7 +63,6 @@ export const AuthorizationStatus = {
   UNKNOWN: 'UNKNOWN', //default, when loading
 };
 
-// ----- UI -----
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 

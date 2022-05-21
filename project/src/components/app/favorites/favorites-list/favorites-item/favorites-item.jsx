@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { useDispatch } from 'react-redux';
+import { changeCity } from '../../../../../store/action';
 import FavoriteSubItem from './favorites-sub-item/favorites-sub-item.jsx';
 
-function renderFavoriteSubItem({previewImage, price, rating, title, type, id}) {
+function renderFavoriteSubItem({previewImage, price, rating, title, type, isFavorite, id}) {
   return (
     <FavoriteSubItem
       previewImage={previewImage}
@@ -11,6 +13,7 @@ function renderFavoriteSubItem({previewImage, price, rating, title, type, id}) {
       rating={rating}
       title={title}
       type={type}
+      isFavorite={isFavorite}
       key={id}
       id={id}
     />
@@ -19,13 +22,19 @@ function renderFavoriteSubItem({previewImage, price, rating, title, type, id}) {
 
 function FavoriteItem ({city, datasCity}) {
   const favoriteSubItem = datasCity.map((data) => renderFavoriteSubItem(data));
+  const dispatch = useDispatch();
+
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="https://ru.reactjs.org">
+          <Link
+            className="locations__item-link"
+            to="/"
+            onClick={() => dispatch(changeCity(city))}
+          >
             <span>{city}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">

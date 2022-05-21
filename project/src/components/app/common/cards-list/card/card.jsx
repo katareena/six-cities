@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getIdActiveCard } from '../../../../../store/data/selectors';
 import { adoptRating } from '../../../../../utils/adopt-rating';
-import { CardItemClasses } from '../../../../../constants/common';
+import { ButtonType, CardItemClasses } from '../../../../../constants/common';
 import FavoritesButton from '../../../common/favorite-button/favorite-button';
 
 function renderPremiumMark(isPremium) {
@@ -19,7 +19,7 @@ function renderPremiumMark(isPremium) {
   }
 }
 
-function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave}) {
+function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave, onClick}) {
   const currentPathname = window.location.pathname.split('/')[1];
   const idActiveCard = useSelector(getIdActiveCard);
 
@@ -32,7 +32,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
     >
       {renderPremiumMark(isPremium)}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${idActiveCard}`}>
+        <Link to={`/offer/${idActiveCard}`} onClick={() => onClick()}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -43,7 +43,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <FavoritesButton offerId={id} isFavorite={isFavorite}/>
+          <FavoritesButton offerId={id} isFavorite={isFavorite} buttonType={ButtonType.OFFERS_LIST_CARD}/>
 
         </div>
         <div className="place-card__rating rating">
@@ -64,6 +64,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
 Card.propTypes = {
   onMouseOver: PropTypes.func,
   onMouseLeave: PropTypes.func,
+  onClick: PropTypes.func,
   id: PropTypes.number.isRequired,
   isPremium: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,

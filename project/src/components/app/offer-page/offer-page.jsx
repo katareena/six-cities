@@ -10,6 +10,7 @@ import CardsList from '../common/cards-list/cards-list';
 import LoadingScrin from '../loading-screen/loading-screen';
 import FavoritesButton from '../common/favorite-button/favorite-button';
 import { adoptRating } from '../../../utils/adopt-rating';
+import { ButtonType } from '../../../constants/common';
 
 function renderImage(img) {
   return (
@@ -40,7 +41,8 @@ function renderGoodsItem(good) {
 }
 
 function Offer () {
-  const {id} = useParams();
+  let {id} = useParams();
+  id = Number(id);
   const activeOffer = useSelector(getActiveOffer);
   const offersNearby = useSelector(getOffersNearby);
   const isOfferItemLoaded = useSelector(getIsOfferItemLoaded);
@@ -62,8 +64,14 @@ function Offer () {
   const createGallery = images.slice(0, 6).map((img) => renderImage(img));
   const createGoods = goods.map((good) => renderGoodsItem(good));
 
+  const myRef = React.createRef();
+  function scrollToMyRef() {
+    console.log(1);
+    return window.scrollTo(0, myRef.current.scrollHeight);
+  }
+
   return (
-    <div className="page">
+    <div className="page" ref={myRef}>
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
@@ -81,7 +89,7 @@ function Offer () {
                   {title}
                 </h1>
 
-                <FavoritesButton offerId={id} isFavorite={isFavorite}/>
+                <FavoritesButton offerId={id} isFavorite={isFavorite} buttonType={ButtonType.OFFER_PAGE_CARD}/>
 
               </div>
               <div className="property__rating rating">
@@ -145,7 +153,7 @@ function Offer () {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardsList
               offers={offersNearby}
-              onCardHover={() => {}}
+              onClick={scrollToMyRef}
             />
           </section>
         </div>
