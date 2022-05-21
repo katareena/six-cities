@@ -1,59 +1,61 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
-import { AppRoute } from './../../constants/common';
+import { AppRoute, AuthorizationStatus } from './../../constants/common';
 import PrivateRoute from './private-route/private-route';
 import browserHistory from '../../browser-history';
-import LoadingScreen from './loading-screen/loading-screen';
 import SignIn from './sign-in/sign-in';
 import Main from './main/main.jsx';
+import OfferPage from './offer-page/offer-page';
 import Favorites from './favorites/favorites';
 import NotFoundScreen from './not-found-screen/not-found-screen';
-import OfferPage from './offer-page/offer-page';
-import citiesProp from '../prop-types/cities.prop';
+import LoadingScreen from './loading-screen/loading-screen';
+import MainEmpty from './main-empty/main-empty';
+import { getOffers, getIsOffersLoaded } from '../../store/data/selectors';
 
-function App({cities, isOffersLoaded}) {
+function renderMain(offers, isOffersLoaded) {
+  if (!isOffersLoaded) {
+    return <LoadingScreen />;
+  }
+
+  if (offers.length === 0) {
+    return <MainEmpty />;
+  }
+
+  return <Main />;
+}
+
+function App() {
+  const offers = useSelector(getOffers);
+  const isOffersLoaded = useSelector(getIsOffersLoaded);
+
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
+
         <Route exact path={AppRoute.LOGIN}>
-          <SignIn />
+          <PrivateRoute exact path={AppRoute.LOGIN}
+            allowedStatus={AuthorizationStatus.NO_AUTH}
+            redirect={AppRoute.ROOT}
+            render={() => <SignIn/>}
+          />
         </Route>
 
-        <Route exact path={AppRoute.ROOT} render={(p) => (
-          !isOffersLoaded ? <LoadingScreen /> : <Main {...p} cities={cities}/>
-        )}
+        <PrivateRoute exact path={AppRoute.FAVORITES}
+          allowedStatus={AuthorizationStatus.AUTH}
+          redirect={AppRoute.LOGIN}
+          render={() => <Favorites/>}
         />
 
-        <PrivateRoute
-          exact
-          path={AppRoute.FAVORITES}
-          render={() => <Favorites />}
-        >
-        </PrivateRoute>
+        <Route exact path={AppRoute.ROOT} render={() => renderMain(offers, isOffersLoaded)}/>
 
-        <Route exact path={AppRoute.OFFER}>
-          <OfferPage />
-        </Route>
+        <Route exact path={AppRoute.OFFER} render={() => <OfferPage />} />
 
-        <Route>
-          <NotFoundScreen />
-        </Route>
+        <Route render={() => <NotFoundScreen />} />
 
       </Switch>
     </BrowserRouter>
   );
 }
 
-App.propTypes = {
-  cities: citiesProp.isRequired,
-  isOffersLoaded: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isOffersLoaded: state.isOffersLoaded,
-});
-
-export {App};
-export default connect(mapStateToProps, null)(App);
+export default App;

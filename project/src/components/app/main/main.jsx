@@ -1,38 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux'; // one of the ways to connect React to the Redux(store)
-
+import { useSelector } from 'react-redux';
+import { getActiveCity } from '../../../store/ui/selectors';
+import { getActualOffers, getIdActiveCard } from '../../../store/data/selectors';
+import { CITIES } from '../../../constants/common';
 import Header from '../header/header';
 import CitiesList from './cities-list/cities-list';
 import CardsList from '../common/cards-list/cards-list';
 import Map from '../main/map-main/map-main';
 import SortMenu from './sort-menu/sort-menu';
 
-import citiesProp from '../../prop-types/cities.prop';
-import offersProp from '../../prop-types/offers.prop';
-
-function sortingOffers(activeSortingValue) {
-  switch (activeSortingValue) {
-    case 'Price: low to high':
-      return (prev, next) => prev.price - next.price;
-    case 'Price: high to low':
-      return (prev, next) => next.price - prev.price;
-    case 'Top rated first':
-      return (prev, next) => next.rating - prev.rating;
-    default:
-      break;
-  }
-}
-
-function Main({offers, cities, activeCity, activeSortingValue, idActiveCard}) {
-  const actualOffers = offers.filter((offer) => offer.city.name === activeCity).sort(sortingOffers(activeSortingValue));
-
-  // console.log(idActiveCard);
-  // console.log(actualOffers);
-  // console.log(offers);
-  // console.log(cities);
-  // console.log(typeof activeCard, activeCard);
-  // console.log(activeCity);
+function Main() {
+  const offers = useSelector(getActualOffers);
+  const activeCity = useSelector(getActiveCity);
+  const idActiveCard = useSelector(getIdActiveCard);
 
   return (
     <div className="page page--gray page--main">
@@ -40,32 +20,30 @@ function Main({offers, cities, activeCity, activeSortingValue, idActiveCard}) {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList
-          cities={cities}
+          cities={CITIES}
           activeCity={activeCity}
         />
         <div className="cities">
           <div className="cities__places-container container">
-            {/* replace with cities__no-places */}
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{actualOffers.length} places to stay in {activeCity}</b>
+              <b className="places__found">{offers.length} places to stay in {activeCity}</b>
 
               <SortMenu />
 
               <CardsList
-                offers={actualOffers}
+                offers={offers}
               />
             </section>
 
             <div className="cities__right-section">
               <Map
                 offers={offers}
-                cities={cities}
+                cities={CITIES}
                 activeCity={activeCity}
                 activeCard={idActiveCard}
               />
             </div>
-
           </div>
         </div>
       </main>
@@ -73,20 +51,4 @@ function Main({offers, cities, activeCity, activeSortingValue, idActiveCard}) {
   );
 }
 
-Main.propTypes = {
-  offers: offersProp.isRequired,
-  cities: citiesProp.isRequired,
-  activeCity: PropTypes.string.isRequired,
-  activeSortingValue: PropTypes.string.isRequired,
-  idActiveCard: PropTypes.number,
-};
-
-const mapStateToProps = ({activeCity, offers, activeSortingValue, idActiveCard}) => ({
-  activeCity,
-  offers,
-  activeSortingValue,
-  idActiveCard,
-});
-
-export { Main }; //keep this option for testing
-export default connect(mapStateToProps, null)(Main); //exporting the component that is connected to the store
+export default Main;

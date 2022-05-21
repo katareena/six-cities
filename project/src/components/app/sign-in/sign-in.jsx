@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { ActionCreator } from '../../../store/action';
+import { useDispatch } from 'react-redux';
+import { setActiveUser } from '../../../store/action';
 import { login } from '../../../store/api-actions';
 import Header from '../header/header';
 
-function SignIn ({onSubmit, setActiveUser}) {
+function SignIn() {
   const mailRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch();
 
   const handelSubmit = () => {
     const userData = {
@@ -16,8 +16,9 @@ function SignIn ({onSubmit, setActiveUser}) {
       password: passwordRef.current.value,
     };
 
-    onSubmit(userData);
-    setActiveUser(userData.login);
+    dispatch(login(userData));
+    dispatch(setActiveUser(userData.login));
+    localStorage.setItem('email', userData.login);
   };
 
   return (
@@ -75,20 +76,4 @@ function SignIn ({onSubmit, setActiveUser}) {
   );
 }
 
-SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  setActiveUser: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  },
-  setActiveUser(userMail) {
-    dispatch(ActionCreator.setActiveUser(userMail));
-    localStorage.setItem('email', userMail);
-  },
-});
-
-export { SignIn };
-export default connect(null, mapDispatchToProps)(SignIn);
+export default SignIn;

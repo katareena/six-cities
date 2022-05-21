@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect, useDispatch } from 'react-redux';
-import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../../../../constants/common.js';
+import { useSelector, useDispatch } from 'react-redux';
 import { sendComment } from '../../../../../store/api-actions';
+import { getPostedComment } from '../../../../../store/ui/selectors.js';
+import { MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH } from '../../../../../constants/common.js';
 
-function FormComment({offerId, postedComment}) {
+function FormComment({offerId}) {
   const [rating, setRating] = useState(0);
   const [newComment, setNewComment] = useState('');
   const [isSubmitBtnDisabled, setIsSubmitBtnDisabled] = useState(true);
-
+  const postedComment = useSelector(getPostedComment);
   const dispatch = useDispatch();
 
   const handleRatingChange = (evt) => {
@@ -101,18 +102,7 @@ function FormComment({offerId, postedComment}) {
 }
 
 FormComment.propTypes = {
-  offerId: PropTypes.string.isRequired,
-  postedComment: PropTypes.shape({
-    isPostedComment: PropTypes.bool,
-    comment: PropTypes.string,
-    rating: PropTypes.number,
-    isErrorPostedComment: PropTypes.bool,
-  }),
+  offerId: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = ({postedComment}) => ({
-  postedComment,
-});
-
-export { FormComment };
-export default connect(mapStateToProps, null)(FormComment);
+export default FormComment;

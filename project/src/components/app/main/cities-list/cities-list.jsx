@@ -1,24 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { ActionCreator } from '../../../../store/action';
+import { useDispatch } from 'react-redux';
+import { changeCity } from '../../../../store/action';
 import CityItem from './city-item/city-item';
 import citiesProp from '../../../prop-types/cities.prop.js';
 
-function renderCitiesList(city, activeCity, changeCity) {
+function renderCitiesList(city, activeCity, dispatch) {
   return (
     <CityItem
       city={city}
       key={city}
       activeCity={activeCity}
-      changeCity={() => changeCity(city)}
+      changeCity={() => dispatch(changeCity(city))}
     />
   );
 }
 
-function CitiesList ({cities, activeCity, changeCity}) {
+function CitiesList ({cities, activeCity}) {
+  const dispatch = useDispatch();
   const locations = cities.map((city) => city.name);
-  const citiesList = locations.map((city) => renderCitiesList(city, activeCity, changeCity));
+  const citiesList = locations.map((city) => renderCitiesList(city, activeCity, dispatch));
 
   return (
     <div className="tabs">
@@ -34,14 +35,6 @@ function CitiesList ({cities, activeCity, changeCity}) {
 CitiesList.propTypes = {
   cities: citiesProp.isRequired,
   activeCity: PropTypes.string.isRequired,
-  changeCity: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
-  },
-});
-
-export { CitiesList };
-export default connect(null, mapDispatchToProps)(CitiesList);
+export default CitiesList;

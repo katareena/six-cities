@@ -1,19 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
-import { connect } from 'react-redux';
-import { ActionCreator } from '../../../../store/action';
+import { changeSortingValue, clickOnSortMenu } from '../../../../store/action';
 import { SORTING_VALUES } from '../../../../constants/common';
+import { getActiveSortingValue, getIsOpenSortMenu } from '../../../../store/ui/selectors';
 
-function renderSortingItem(sortingValue, activeSortingValue, clickOnSortMenu, changeSortingValue) {
+function renderSortingItem(sortingValue, activeSortingValue, dispatch) {
   return (
     <li
       className={cn('places__option',{'places__option--active':sortingValue === activeSortingValue})}
       tabIndex="0"
       key={sortingValue}
       onClick={() => {
-        changeSortingValue(sortingValue);
-        clickOnSortMenu(false);
+        dispatch(changeSortingValue(sortingValue));
+        dispatch(clickOnSortMenu(false));
       }}
     >
       {sortingValue}
@@ -21,13 +21,17 @@ function renderSortingItem(sortingValue, activeSortingValue, clickOnSortMenu, ch
   );
 }
 
-function SortMenu({activeSortingValue, isOpenSortMenu, clickOnSortMenu, changeSortingValue}) {
-  const sortingItems = SORTING_VALUES.map((sortingValue) => renderSortingItem(sortingValue, activeSortingValue, clickOnSortMenu, changeSortingValue));
+function SortMenu() {
+  const activeSortingValue = useSelector(getActiveSortingValue);
+  const isOpenSortMenu = useSelector(getIsOpenSortMenu);
+  const dispatch = useDispatch();
+
+  const sortingItems = SORTING_VALUES.map((sortingValue) => renderSortingItem(sortingValue, activeSortingValue, dispatch));
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by &thinsp;</span>
-      <span className="places__sorting-type" tabIndex="0" onClick={() => clickOnSortMenu(!isOpenSortMenu)}>
+      <span className="places__sorting-type" tabIndex="0" onClick={() => dispatch(clickOnSortMenu(!isOpenSortMenu))}>
         {activeSortingValue}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
@@ -40,26 +44,4 @@ function SortMenu({activeSortingValue, isOpenSortMenu, clickOnSortMenu, changeSo
   );
 }
 
-SortMenu.propTypes = {
-  activeSortingValue: PropTypes.string.isRequired,
-  isOpenSortMenu: PropTypes.bool.isRequired,
-  clickOnSortMenu: PropTypes.func.isRequired,
-  changeSortingValue: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = ({activeSortingValue, isOpenSortMenu}) => ({
-  activeSortingValue,
-  isOpenSortMenu,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  changeSortingValue(sortingValue) {
-    dispatch(ActionCreator.changeSortingValue(sortingValue));
-  },
-  clickOnSortMenu(isOpenSortMenu) {
-    dispatch(ActionCreator.clickOnSortMenu(isOpenSortMenu));
-  },
-});
-
-export { SortMenu };
-export default connect(mapStateToProps, mapDispatchToProps)(SortMenu);
+export default SortMenu;

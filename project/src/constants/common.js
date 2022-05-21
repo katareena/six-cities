@@ -15,6 +15,24 @@ export const CardItemClasses = {
   'offer': 'near-places__card place-card',
 };
 
+export const ButtonType = {
+  OFFERS_LIST_CARD: 'OFFERS_LIST_CARD',
+  OFFER_PAGE_CARD: 'OFFER_PAGE_CARD',
+};
+
+export const FavoritesButtonSetting = {
+  'OFFERS_LIST_CARD': {
+    CLASS: 'place-card',
+    WIDTH: 18,
+    HEIGHT: 19,
+  },
+  'OFFER_PAGE_CARD': {
+    CLASS: 'property',
+    WIDTH: 31,
+    HEIGHT: 33,
+  },
+};
+
 export const AppRoute = {
   ROOT: '/',
   LOGIN: '/login',
@@ -30,6 +48,7 @@ export const APIRoute = {
   LOGOUT: '/logout',
   ROOM: '/hotels/',
   COMMENTS: '/comments/',
+  FAVORITES: '/favorite',
 };
 
 export const ResponseCodes = {
@@ -44,7 +63,6 @@ export const AuthorizationStatus = {
   UNKNOWN: 'UNKNOWN', //default, when loading
 };
 
-// ----- UI -----
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 

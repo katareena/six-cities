@@ -1,43 +1,47 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import offersProp from '../../prop-types/offers.prop.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFavoriteOffersList } from '../../../store/api-actions';
+import { getFavoriteOffers, getIsFavoriteOffersLoaded } from '../../../store/data/selectors';
 import Header from '../header/header';
-import FavoriteList from '../favorites/favorites-list/favorites-list';
+import FavoriteList from './favorites-list/favorites-list';
+import FavoriteListEmpty from './favorites-list-empty/favorites-list-empty';
 
-function createDictionary(newDictionary, currentArrItem) {
-  newDictionary[currentArrItem.city.name] = newDictionary[currentArrItem.city.name] || [];
-  newDictionary[currentArrItem.city.name].push(currentArrItem);
+function renderFavorites(isFavoriteOffersLoaded, favoriteOffers) {
+  if (isFavoriteOffersLoaded) {
+    if (favoriteOffers.length === 0) {
+      return <FavoriteListEmpty />;
+    }
 
-  return newDictionary;
+    return <FavoriteList />;
+  }
+
+  return (
+    <section className="favorites favorites--empty">
+      <div className="favorites__status-wrapper">
+        <h1>Loading...</h1>
+      </div>
+    </section>
+  );
 }
 
-function renderFavoriteLists(data) {
-  return Object.keys(data).map((key) => (
-    <FavoriteList
-      city={key}
-      datasCity={data[key]}
-      key={key}
-    />
-  ));
-}
+function Favorites() {
+  const favoriteOffers = useSelector(getFavoriteOffers);
+  const isFavoriteOffersLoaded = useSelector(getIsFavoriteOffersLoaded);
+  const dispatch = useDispatch();
 
-function Favorites ({offers}) {
-  const favoriteoffers = offers.filter(({isFavorite}) => isFavorite);
-  const favoriteoffersByCity = favoriteoffers.reduce(createDictionary, Object.create(null));
-  const FavoriteLists = renderFavoriteLists(favoriteoffersByCity);
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersList());
+  }, [dispatch]);
 
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {FavoriteLists}
-            </ul>
-          </section>
+
+          {renderFavorites(isFavoriteOffersLoaded, favoriteOffers)}
+
         </div>
       </main>
       <footer className="footer container">
@@ -49,13 +53,4 @@ function Favorites ({offers}) {
   );
 }
 
-Favorites.propTypes = {
-  offers: offersProp,
-};
-
-const mapStateToProps = ({offers}) => ({
-  offers,
-});
-
-export {Favorites};
-export default connect(mapStateToProps, null)(Favorites);
+export default Favorites;

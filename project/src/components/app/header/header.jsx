@@ -1,21 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { AuthorizationStatus, AppRoute } from '../../../constants/common';
-import { ActionCreator } from '../../../store/action';
+import { signOut, setActiveUser } from '../../../store/action';
+import { getAuthorizationStatus, getAuthUser } from '../../../store/user/selectors';
 
-function renderUserMenu(authorizationStatus, logout, authUser, setActiveUser) {
-  const mail = localStorage.getItem('email');
-
+function renderUserMenu(authorizationStatus, authUser, dispatch) {
   if (authorizationStatus === AuthorizationStatus.AUTH) {
     return (
       <ul className="header__nav-list">
         <li className="header__nav-item user">
           <Link className="header__nav-link header__nav-link--profile" to="/favorites">
             <div className="header__avatar-wrapper user__avatar-wrapper">
+              <img src={authUser.avatarUrl} alt={'User avatar'} style={{borderRadius: '50%'}}/>
             </div>
-            <span className="header__user-name user__name">{mail}</span>
+            <span className="header__user-name user__name">{authUser.email}</span>
           </Link>
         </li>
         <li className="header__nav-item">
@@ -24,8 +23,14 @@ function renderUserMenu(authorizationStatus, logout, authUser, setActiveUser) {
             to="/"
             onClick={(evt) => {
               evt.preventDefault();
-              logout();
-              setActiveUser('');
+              dispatch(signOut());
+              dispatch(setActiveUser({
+                avatarUrl: '',
+                email: '',
+                id: null,
+                isPro: false,
+                name: '',
+              }));
               localStorage.removeItem('mail');
             }}
           >
@@ -52,7 +57,11 @@ function renderUserMenu(authorizationStatus, logout, authUser, setActiveUser) {
   }
 }
 
-function Header({authorizationStatus, logout, authUser, setActiveUser}) {
+function Header() {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const authUser = useSelector(getAuthUser);
+  const dispatch = useDispatch();
+
   return (
     <header className="header">
       <div className="container">
@@ -63,7 +72,7 @@ function Header({authorizationStatus, logout, authUser, setActiveUser}) {
             </Link>
           </div>
           <nav className="header__nav">
-            {renderUserMenu(authorizationStatus, logout, authUser, setActiveUser)}
+            {renderUserMenu(authorizationStatus, authUser, dispatch)}
           </nav>
         </div>
       </div>
@@ -71,27 +80,4 @@ function Header({authorizationStatus, logout, authUser, setActiveUser}) {
   );
 }
 
-Header.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  logout: PropTypes.func.isRequired,
-  authUser: PropTypes.string,
-  setActiveUser: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = ({authorizationStatus, authUser}) => ({
-  authorizationStatus,
-  authUser,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  logout() {
-    dispatch(ActionCreator.logout());
-  },
-
-  setActiveUser(userMail) {
-    dispatch(ActionCreator.setActiveUser(userMail));
-  },
-});
-
-export { Header };
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

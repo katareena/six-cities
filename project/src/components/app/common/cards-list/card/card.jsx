@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Link, useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import cn from 'classnames';
+import { useSelector } from 'react-redux';
+import { getIdActiveCard } from '../../../../../store/data/selectors';
 import { adoptRating } from '../../../../../utils/adopt-rating';
-import { CardItemClasses, AppRoute, AuthorizationStatus } from '../../../../../constants/common';
+import { ButtonType, CardItemClasses } from '../../../../../constants/common';
+import FavoritesButton from '../../../common/favorite-button/favorite-button';
 
 function renderPremiumMark(isPremium) {
   if (isPremium) {
@@ -18,20 +19,20 @@ function renderPremiumMark(isPremium) {
   }
 }
 
-function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave, authorizationStatus, idActiveCard}) {
+function Card({isPremium, isFavorite, previewImage, price, rating, title, type, id, onMouseOver, onMouseLeave}) {
   const currentPathname = window.location.pathname.split('/')[1];
-  const history = useHistory();
+  const idActiveCard = useSelector(getIdActiveCard);
 
   return (
     <article
       className={CardItemClasses[currentPathname]}
       id={id}
-      onMouseOver={onMouseOver}
-      onMouseLeave={onMouseLeave}
+      onMouseOver = {onMouseOver}
+      onMouseLeave = {onMouseLeave}
     >
       {renderPremiumMark(isPremium)}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${idActiveCard}`}>
+        <Link to={`/offer/${idActiveCard}`} onClick={() => window.scrollTo(0, 0)}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -41,15 +42,9 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={cn('place-card__bookmark-button button',{'place-card__bookmark-button--active':isFavorite})} type="button"
-            onClick={() => authorizationStatus === AuthorizationStatus.AUTH || history.push(AppRoute.LOGIN)}
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+
+          <FavoritesButton offerId={id} isFavorite={isFavorite} buttonType={ButtonType.OFFERS_LIST_CARD}/>
+
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -58,7 +53,7 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{title}</Link>
+          <Link to={`/offer/${id}`} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -67,6 +62,9 @@ function Card({isPremium, isFavorite, previewImage, price, rating, title, type, 
 }
 
 Card.propTypes = {
+  onMouseOver: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  id: PropTypes.number.isRequired,
   isPremium: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   previewImage: PropTypes.string.isRequired,
@@ -74,17 +72,6 @@ Card.propTypes = {
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  onMouseOver: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  id: PropTypes.number.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  idActiveCard: PropTypes.number,
 };
 
-const mapStateToProps = ({authorizationStatus, idActiveCard}) => ({
-  authorizationStatus,
-  idActiveCard,
-});
-
-export {Card};
-export default connect(mapStateToProps, null)(Card);
+export default Card;

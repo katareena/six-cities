@@ -1,81 +1,85 @@
+import { createAction } from '@reduxjs/toolkit';
+
 export const ActionType = {
+  // ----- data -----
   LOAD_OFFERS: 'data/loadOffers',
   LOAD_OFFER_ITEM: 'data/loadOfferItem',
   LOAD_COMMENTS: 'data/loadComments',
   LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
+  LOAD_FAVORITE_OFFERS: 'data/loadFavoriteOffers',
+  UPDATE_OFFER: 'data/updateOffer',
+  SET_ID_ACTIVE_CARD: 'main/setIdActiveCard',
+  REDIRECT_TO_ROUTE: 'main/redirectToRoute',
+
+  // ----- ui -----
   CHANGE_CITY: 'main/changeCity',
   CLICK_ON_SORT_MENU: 'main/clickOnSortMenu',
   CHANGE_SORTING_VALUE: 'main/changeSortingValue',
-  SET_ID_ACTIVE_CARD: 'main/setIdActiveCard',
-  REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
-  LOGOUT: 'user/logout',
-  REDIRECT_TO_ROUTE: 'main/redirectToRoute',
-  SET_AUTH_USER: 'user/setAuthUser',
   POSTED_COMMENT: 'data/postedComment',
+
+  // ----- user -----
+  REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
+  SET_AUTH_USER: 'user/setAuthUser',
+  LOGOUT: 'user/logout',
 };
 
-export const ActionCreator =  {
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
-  }),
+// ----- data -----
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({
+  payload: offers,
+}));
 
-  loadComments: (comments) => ({
-    type: ActionType.LOAD_COMMENTS,
-    payload: comments,
-  }),
+export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => ({
+  payload: comments,
+}));
 
-  loadOfferItem: (activeOffer) => ({
-    type: ActionType.LOAD_OFFER_ITEM,
-    payload: activeOffer,
-  }),
+export const loadOfferItem = createAction(ActionType.LOAD_OFFER_ITEM, (activeOffer) => ({
+  payload: activeOffer,
+}));
 
-  loadOffersNearby: (offersNearby) => ({
-    type: ActionType.LOAD_OFFERS_NEARBY,
-    payload: offersNearby,
-  }),
+export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (offersNearby) => ({
+  payload: offersNearby,
+}));
 
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
+export const loadFavoriteOffers = createAction(ActionType.LOAD_FAVORITE_OFFERS, (favoriteOffers) => ({
+  payload: favoriteOffers,
+}));
 
-  clickOnSortMenu: (isOpenSortMenu) => ({
-    type: ActionType.CLICK_ON_SORT_MENU,
-    payload: isOpenSortMenu,
-  }),
+export const updateOffer = createAction(ActionType.UPDATE_OFFER, (offer) => ({
+  payload: offer,
+}));
 
-  changeSortingValue: (sortingValue) => ({
-    type: ActionType.CHANGE_SORTING_VALUE,
-    payload: sortingValue,
-  }),
+export const setIdActiveCard = createAction(ActionType.SET_ID_ACTIVE_CARD, (id) => ({
+  payload: id,
+}));
 
-  setIdActiveCard: (id) => ({
-    type: ActionType.SET_ID_ACTIVE_CARD,
-    payload: id,
-  }),
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));
 
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
+// ----- ui -----
+export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
+  payload: city,
+}));
 
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
+export const clickOnSortMenu = createAction(ActionType.CLICK_ON_SORT_MENU, (isOpenSortMenu) => ({
+  payload: isOpenSortMenu,
+}));
 
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
+export const changeSortingValue = createAction(ActionType.CHANGE_SORTING_VALUE, (sortingValue) => ({
+  payload: sortingValue,
+}));
 
-  setActiveUser: (authData) => ({
-    type: ActionType.SET_AUTH_USER,
-    payload: authData,
-  }),
+export const postedComment = createAction(ActionType.POSTED_COMMENT, (isPostedComment) => ({
+  payload: isPostedComment,
+}));
 
-  postedComment: (isPostedComment) => ({
-    type: ActionType.POSTED_COMMENT,
-    payload: isPostedComment,
-  }),
-};
+// ----- user -----
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
+  payload: status,
+}));
+
+export const setActiveUser = createAction(ActionType.SET_AUTH_USER, (authData) => ({
+  payload: authData,
+}));
+
+export const signOut = createAction(ActionType.LOGOUT);

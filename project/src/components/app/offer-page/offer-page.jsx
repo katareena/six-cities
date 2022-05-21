@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIsOfferItemLoaded, getOffersNearby, getActiveOffer } from '../../../store/data/selectors';
 import { fetchOfferItem, fetchNearby, fetchComments } from '../../../store/api-actions';
-
 import Header from '../header/header';
 import ReviewList from './review-list/review-list';
 import MapOffer from './map-offer/map-offer';
 import CardsList from '../common/cards-list/cards-list';
 import LoadingScrin from '../loading-screen/loading-screen';
-import offersProp from '../../prop-types/offers.prop';
+import FavoritesButton from '../common/favorite-button/favorite-button';
 import { adoptRating } from '../../../utils/adopt-rating';
+import { ButtonType } from '../../../constants/common';
 
 function renderImage(img) {
   return (
@@ -41,12 +40,19 @@ function renderGoodsItem(good) {
   );
 }
 
-function Offer ({activeOffer, offersNearby, onLoad, isOfferItemLoaded}) {
-  const {id} = useParams();
+function Offer () {
+  let {id} = useParams();
+  id = Number(id);
+  const activeOffer = useSelector(getActiveOffer);
+  const offersNearby = useSelector(getOffersNearby);
+  const isOfferItemLoaded = useSelector(getIsOfferItemLoaded);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    onLoad(id);
-  }, [id, onLoad]);
+    dispatch(fetchOfferItem(id));
+    dispatch(fetchNearby(id));
+    dispatch(fetchComments(id));
+  }, [id, dispatch]);
 
   if (!isOfferItemLoaded) {
     return (
@@ -76,14 +82,9 @@ function Offer ({activeOffer, offersNearby, onLoad, isOfferItemLoaded}) {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button
-                  className={cn('property__bookmark-button button',{'property__bookmark-button--active':isFavorite})} type="button"
-                >
-                  <svg className="property__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+
+                <FavoritesButton offerId={id} isFavorite={isFavorite} buttonType={ButtonType.OFFER_PAGE_CARD}/>
+
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -146,7 +147,6 @@ function Offer ({activeOffer, offersNearby, onLoad, isOfferItemLoaded}) {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardsList
               offers={offersNearby}
-              onCardHover={() => {}}
             />
           </section>
         </div>
@@ -155,54 +155,4 @@ function Offer ({activeOffer, offersNearby, onLoad, isOfferItemLoaded}) {
   );
 }
 
-Offer.propTypes = {
-  offersNearby: offersProp,
-  onLoad: PropTypes.func.isRequired,
-  isOfferItemLoaded: PropTypes.bool.isRequired,
-
-  activeOffer: PropTypes.shape({
-    bedrooms: PropTypes.number,
-    city: PropTypes.shape({
-      location: PropTypes.objectOf(PropTypes.number),
-      name: PropTypes.string.isRequired,
-    }),
-    description: PropTypes.string.isRequired,
-    goods: PropTypes.array,
-    host: PropTypes.shape({
-      avatarUrl: PropTypes.string,
-      id: PropTypes.number.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-
-    id: PropTypes.number.isRequired,
-    images: PropTypes.array,
-    isPremium: PropTypes.bool.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-
-    maxAdults: PropTypes.number.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  }),
-};
-
-const mapStateToProps = ({activeCity, activeOffer, offersNearby, isOfferItemLoaded}) => ({
-  activeCity,
-  activeOffer,
-  offersNearby,
-  isOfferItemLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoad(id) {
-    dispatch(fetchOfferItem(id));
-    dispatch(fetchNearby(id));
-    dispatch(fetchComments(id));
-  },
-});
-
-export { Offer };
-export default connect(mapStateToProps, mapDispatchToProps)(Offer);
+export default Offer;
