@@ -15,7 +15,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
 );
 
 export const fetchOfferItem = (offerId) => (dispatch, _getState, api) => (
-  api.get(APIRoute.ROOM + offerId)
+  api.get(`${APIRoute.ROOM}${offerId}`)
     .then(({data}) => {
       const offer = toCamelCase(data);
       return offer;
@@ -40,7 +40,7 @@ export const fetchNearby = (offerId) => (dispatch, _getState, api) => (
 );
 
 export const fetchComments = (offerId) => (dispatch, _getState, api) => (
-  api.get(APIRoute.COMMENTS + offerId)
+  api.get(`${APIRoute.COMMENTS}${offerId}`)
     .then(({data}) => {
       const comments = toCamelCase(data);
       return comments;
@@ -49,7 +49,7 @@ export const fetchComments = (offerId) => (dispatch, _getState, api) => (
 );
 
 export const sendComment = ({offerId, comment, rating}) => (dispatch, _getState, api) =>
-  api.post(APIRoute.COMMENTS + offerId, {comment, rating})
+  api.post(`${APIRoute.COMMENTS}${offerId}`, {comment, rating})
     .then(({ status, data }) => {
       if (status !== ResponseCodes.SUCCESS) {
         dispatch(postedComment({isPostedComment: false, comment: comment, rating: rating, isErrorPostedComment: true}));
@@ -60,7 +60,7 @@ export const sendComment = ({offerId, comment, rating}) => (dispatch, _getState,
       }
     })
     .catch((err) => {
-      console.log(`Error: ${err.message}`);
+      // console.log(`Error: ${err.message}`);
       dispatch(postedComment({isPostedComment: false, comment: comment, rating: rating, isErrorPostedComment: true}));
     });
 
@@ -72,7 +72,8 @@ export const checkAuth = () => (dispatch, _getState, api) => (
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
     })
     .catch((err) => {
-      console.log(`Error: ${err.message}`);
+      // console.log(`Error: ${err.message}`);
+      dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
     })
 );
 
@@ -93,18 +94,18 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => dispatch(signOut()))
 );
 
-export const fetchFavoriteOffersList = () => (dispatch, _getState, api) => {
+export const fetchFavoriteOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FAVORITES)
     .then(({data}) => {
       const favoriteOffers = toCamelCase(data);
       return favoriteOffers;
     })
     .then((favoriteOffers) => dispatch(loadFavoriteOffers(favoriteOffers)))
-    .catch(() => dispatch(loadFavoriteOffers([])));
-};
+    .catch(() => dispatch(loadFavoriteOffers([])))
+);
 
-export const addOfferToFavorites = ({offerId, status}) => (dispatch, _getState, api) => {
+export const addOfferToFavorites = ({offerId, status}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITES}/${offerId}/${status}`)
     .then(({data}) => dispatch(updateOffer(data)))
-    .catch(() => {});
-};
+    .catch(() => {})
+);
