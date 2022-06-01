@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router as BrowserRouter } from 'react-router-dom';
-import browserHistory from '../../browser-history';
+import browserHistory from './browser-history';
 import { configureStore } from '@reduxjs/toolkit';
 import { createAPI } from './services/api';
 import { redirect } from './store/middleware/redirect';
