@@ -529,5 +529,4 @@ describe('Application Routing', () => {
     expect(screen.getByText(/places to stay/i)).toBeInTheDocument();
     expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
   });
-
 });

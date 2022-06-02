@@ -25,7 +25,7 @@ function renderFavorites(isFavoriteOffersLoaded, favoriteOffers) {
   );
 }
 
-function Favorites() {
+function FavoritesPage() {
   const favoriteOffers = useSelector(getFavoriteOffers);
   const isFavoriteOffersLoaded = useSelector(getIsFavoriteOffersLoaded);
   const dispatch = useDispatch();
@@ -53,4 +53,4 @@ function Favorites() {
   );
 }
 
-export default Favorites;
+export default FavoritesPage;

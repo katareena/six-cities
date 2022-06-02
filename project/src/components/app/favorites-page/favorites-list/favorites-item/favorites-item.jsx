@@ -20,7 +20,7 @@ function renderFavoriteSubItem({previewImage, price, rating, title, type, isFavo
   );
 }
 
-function FavoriteItem ({city, datasCity}) {
+function FavoriteItem({city, datasCity}) {
   const favoriteSubItem = datasCity.map((data) => renderFavoriteSubItem(data));
   const dispatch = useDispatch();
 

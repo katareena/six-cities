@@ -7,7 +7,6 @@ import ReviewItem from './review-item/review-item';
 import FormComment from './form-comment/form-comment';
 import { AuthorizationStatus } from '../../../../constants/common';
 
-
 function renderReview({user: {avatarUrl, name}, rating, comment, date, id}) {
   return (
     <ReviewItem

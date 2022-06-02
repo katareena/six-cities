@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from './../../constants/common';
 import PrivateRoute from './private-route/private-route';
-import SignIn from './sign-in/sign-in';
-import Main from './main/main.jsx';
+import AuthPage from './auth-page/auth-page';
+import MainPage from './main-page/main-page';
 import OfferPage from './offer-page/offer-page';
-import Favorites from './favorites/favorites';
+import FavoritesPage from './favorites-page/favorites-page';
 import NotFoundScreen from './not-found-screen/not-found-screen';
 import LoadingScreen from './loading-screen/loading-screen';
 import MainEmpty from './main-empty/main-empty';
@@ -21,7 +21,7 @@ function renderMain(offers, isOffersLoaded) {
     return <MainEmpty />;
   }
 
-  return <Main />;
+  return <MainPage />;
 }
 
 function App() {
@@ -35,14 +35,14 @@ function App() {
         <PrivateRoute exact path={AppRoute.LOGIN}
           allowedStatus={AuthorizationStatus.NO_AUTH}
           redirect={AppRoute.ROOT}
-          render={() => <SignIn/>}
+          render={() => <AuthPage/>}
         />
       </Route>
 
       <PrivateRoute exact path={AppRoute.FAVORITES}
         allowedStatus={AuthorizationStatus.AUTH}
         redirect={AppRoute.LOGIN}
-        render={() => <Favorites/>}
+        render={() => <FavoritesPage/>}
       />
 
       <Route exact path={AppRoute.ROOT} render={() => renderMain(offers, isOffersLoaded)}/>

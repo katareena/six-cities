@@ -24,7 +24,13 @@ function ReviewItem({avatarUrl, name, rating, date, comment}) {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={formatDate(date)}>{formatDate(date)}</time>
+        <time
+          className="reviews__time"
+          dateTime={formatDate(date)}
+          data-testid="reviews-test-time"
+        >
+          {formatDate(date)}
+        </time>
       </div>
     </li>
   );

@@ -40,7 +40,7 @@ function renderGoodsItem(good) {
   );
 }
 
-function Offer () {
+function OfferPage() {
   let {id} = useParams();
   id = Number(id);
   const activeOffer = useSelector(getActiveOffer);
@@ -155,4 +155,4 @@ function Offer () {
   );
 }
 
-export default Offer;
+export default OfferPage;

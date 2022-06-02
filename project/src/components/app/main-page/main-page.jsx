@@ -6,10 +6,10 @@ import { CITIES } from '../../../constants/common';
 import Header from '../header/header';
 import CitiesList from './cities-list/cities-list';
 import CardsList from '../common/cards-list/cards-list';
-import Map from '../main/map-main/map-main';
+import Map from '../main-page/map-main/map-main';
 import SortMenu from './sort-menu/sort-menu';
 
-function Main() {
+function MainPage() {
   const offers = useSelector(getActualOffers);
   const activeCity = useSelector(getActiveCity);
   const idActiveCard = useSelector(getIdActiveCard);
@@ -51,4 +51,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default MainPage;

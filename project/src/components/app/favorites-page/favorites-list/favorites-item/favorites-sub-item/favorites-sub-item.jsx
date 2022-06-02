@@ -5,7 +5,7 @@ import FavoritesButton from '../../../../common/favorite-button/favorite-button'
 import { ButtonType } from '../../../../../../constants/common';
 import { adoptRating } from '../../../../../../utils/adopt-rating';
 
-function FavoriteSubItem ({previewImage, price, rating, title, type, isFavorite, id}) {
+function FavoriteSubItem({previewImage, price, rating, title, type, isFavorite, id}) {
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -19,9 +19,7 @@ function FavoriteSubItem ({previewImage, price, rating, title, type, isFavorite,
             <b className="place-card__price-value">{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-
           <FavoritesButton offerId={id} isFavorite={isFavorite} buttonType={ButtonType.OFFERS_LIST_CARD}/>
-
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

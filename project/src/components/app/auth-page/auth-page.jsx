@@ -5,12 +5,12 @@ import { setActiveUser } from '../../../store/action';
 import { login } from '../../../store/api-actions';
 import Header from '../header/header';
 
-function SignIn() {
+function AuthPage() {
   const mailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
 
-  const handelSubmit = () => {
+  const handleSubmit = () => {
     const userData = {
       login: mailRef.current.value,
       password: passwordRef.current.value,
@@ -34,29 +34,33 @@ function SignIn() {
               method="post"
               onSubmit={(evt) => {
                 evt.preventDefault();
-                handelSubmit();
+                handleSubmit();
               }}
             >
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
+                <label className="visually-hidden" htmlFor="email">E-mail</label>
                 <input
                   ref={mailRef}
                   className="login__input form__input"
+                  id="email"
                   type="email"
                   name="email"
                   placeholder="Email"
                   required
+                  data-testid="email"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
+                <label className="visually-hidden" htmlFor="password">Password</label>
                 <input
                   ref={passwordRef}
                   className="login__input form__input"
+                  id="password"
                   type="password"
                   name="password"
                   placeholder="Password"
                   required
+                  data-testid="password"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
@@ -72,8 +76,7 @@ function SignIn() {
         </div>
       </main>
     </div>
-
   );
 }
 
-export default SignIn;
+export default AuthPage;
